@@ -1,9 +1,11 @@
 <?php
+namespace App\Config;
 
+use App\Config\Database;
+use PDO;
+// require_once __DIR__ .'/Database.php';
 
-require_once __DIR__.'/../config/Database.php';
-
-class crud {
+class Crud {
     private static $conn;
   
     

@@ -1,7 +1,7 @@
 <?php
 require_once '../../vendor/autoload.php';
-require_once __DIR__.'/../controller/tags.php';
-// use App\Controller\tags;
+require __DIR__.'/../controller/categorieController.php';
+use App\Model\category;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,12 +18,14 @@ require_once __DIR__.'/../controller/tags.php';
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width:300px;
+ 
 
   }
   .form-container{
     width:500px;
     margin:auto;
- margin-bottom:30px;
+    margin-bottom:30px;
   }
   form label {
     font-weight: bold;
@@ -50,85 +52,25 @@ require_once __DIR__.'/../controller/tags.php';
   form button:hover {
     background-color:#2a2185;
   }
-  
-  .table-container {
-    margin-top: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table th,
-  table td {
-    text-align: left;
-    padding: 10px;
-    border: 1px solid #dddddd;
-  }
-  
-  table th {
-    background-color:#2a2185;
-    color: white;
-  }
-  
-  table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  table a {
-    color:#2a2185;
-    text-decoration: none;
-    margin-right: 10px;
-    
-  }
-  
-  table a:hover {
-    text-decoration: none;
-  }
-  .delete {
-  border: 2px solid red; 
-  padding: 5px 10px; 
-  border-radius: 5px; 
-  color: red; 
-  background-color: #ffe6e6; 
-  text-decoration: none; 
+  </style>
+  <?php
+if (isset($_GET['id'])) {
+    $category = Category::getCategoryById($_GET['id']);
+    if (!$category) {
+        echo "Catégorie introuvable";
+        exit;
+    }
+} else {
+    echo "ID non spécifié";
+    exit;
 }
-
-.delete:hover {
-  background-color: red;
-  color: white; 
-}
-
-.update {
-  border: 2px solid green; 
-  padding: 5px 10px; 
-  border-radius: 5px; 
-  color: green; 
-  background-color: #e6ffe6;
-  text-decoration: none; 
-}
-
-.update:hover {
-  background-color: green;
-  color: white; 
-}
- 
-
-        </style>
-</head>
-
-<body>
-    <!-- =============== Navigation ================ -->
-    <div class="container">
+?>
+  <!-- =============== Navigation ================ -->
+  <div class="container">
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="../includes/dashboard.php">
+                    <a href="dashboard.php">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
@@ -149,9 +91,11 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">Courses</span>
+                        <span class="title">Articles</span>
                     </a>
                 </li>
+                
+               
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -160,14 +104,7 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title">Categorie</span>
                     </a>
                 </li>
-                <li>
-                    <a href="articleDash.php">
-                        <span class="icon">
-                           <ion-icon name="document-text-outline"></ion-icon>
-                        </span>
-                        <span class="title">manage courses</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="tags.php">
                         <span class="icon">
@@ -184,7 +121,7 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title">user</span>
                     </a>
                 </li>
-            
+              
                 <li>
                     <a href="sign_up.php">
                         <span class="icon">
@@ -214,57 +151,19 @@ require_once __DIR__.'/../controller/tags.php';
                     <img src="../../assets/me.jpg" alt="">
                 </div>
             </div>
-      <!-- affichage  -->
-            <div class="container">
-    
-            <div class="form-container">
-      <form id="tagForm" method="POST">
-        <label for="tagName">Nom du Tag :</label>
-        <input type="text" id="tagName" name="tagName" placeholder="Entrez un nom de tag" required>
-        <button type="submit" name="submit">Ajouter</button>
-      </form>
-    </div>
-    <div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Id du Tag</th>
-                <th>Nom du Tag</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="tagTableBody">
-            <?php
-           
-            if (!empty($tags)) {
-                foreach ($tags as $tag) {
-                    echo "<tr>
-                            <td>{$tag['id']}</td>
-                            <td>{$tag['name']}</td>
-                            <td>
-                                <a class='update' href='edit_tag.php?id={$tag['id']}'>Modifier</a>
-                                 <a class='delete' href='tags.php?action=delete&id={$tag['id']}'>Supprimer</a>
-                            </td>
-                          </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>Aucun tag trouvé</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-
-    </div>
-  </div>
-  <script src="dashboard.js"></script>
-   
-
-   <!-- ======= Charts JS ====== -->
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+      
+<h2>Modifier la Catégorie</h2>
+<form method="POST" action="categories.php">
+    <input type="hidden" name="id" value="<?php echo $category['id']; ?>">
+    <label for="categoryName">Nom de la Catégorie :</label>
+    <input type="text" id="categoryName" name="categoryName" value="<?php echo $category['name']; ?>" required>
+    <button type="submit" name="update">Modifier</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
    <script src="assets/js/chartsJS.js"></script>
 
    <!-- ====== ionicons ======= -->
    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+</html>

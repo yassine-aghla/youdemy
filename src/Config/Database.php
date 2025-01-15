@@ -1,10 +1,14 @@
 <?php
+namespace App\Config;
 
-require '../vendor/autoload.php';
 use Dotenv\Dotenv;
+use PDO;
+use PDOException;
+require __DIR__ . '/../../vendor/autoload.php';
 
 
-$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+
+$dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 class Database
 {
@@ -25,7 +29,7 @@ class Database
         try {
             
             self::$pdo = new PDO($dsn, $username, $password, $options);
-            echo "Connected successfully";
+            // echo "Connected successfully";
         } catch (PDOException $e) {
            
             die("Connection failed: " . $e->getMessage());
@@ -35,11 +39,6 @@ class Database
     }
 
     
-    // public static function getConnection()
-    // {
-    //     return self::$pdo;
-    // }
+    
 }
 
-
-echo "Yara";

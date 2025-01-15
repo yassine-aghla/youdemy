@@ -1,6 +1,6 @@
 <?php
 require_once '../../vendor/autoload.php';
-require_once __DIR__.'/../controller/tags.php';
+require_once __DIR__.'/../controller/categorieController.php';
 // use App\Controller\tags;
 ?>
 <!DOCTYPE html>
@@ -215,47 +215,45 @@ require_once __DIR__.'/../controller/tags.php';
                 </div>
             </div>
       <!-- affichage  -->
-            <div class="container">
-    
-            <div class="form-container">
-      <form id="tagForm" method="POST">
-        <label for="tagName">Nom du Tag :</label>
-        <input type="text" id="tagName" name="tagName" placeholder="Entrez un nom de tag" required>
-        <button type="submit" name="submit">Ajouter</button>
-      </form>
+      <div class="container">
+    <div class="form-container">
+        <form id="categoryForm" method="POST">
+            <label for="categoryName">Nom de la Catégorie :</label>
+            <input type="text" id="categoryName" name="categoryName" placeholder="Entrez un nom de catégorie" required>
+            <button type="submit" name="submit">Ajouter</button>
+        </form>
     </div>
     <div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Id du Tag</th>
-                <th>Nom du Tag</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="tagTableBody">
-            <?php
-           
-            if (!empty($tags)) {
-                foreach ($tags as $tag) {
-                    echo "<tr>
-                            <td>{$tag['id']}</td>
-                            <td>{$tag['name']}</td>
-                            <td>
-                                <a class='update' href='edit_tag.php?id={$tag['id']}'>Modifier</a>
-                                 <a class='delete' href='tags.php?action=delete&id={$tag['id']}'>Supprimer</a>
-                            </td>
-                          </tr>";
+        <table>
+            <thead>
+                <tr>
+                    <th>ID de la Catégorie</th>
+                    <th>Nom de la Catégorie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="categoryTableBody">
+                <?php
+                if (!empty($categories)) {
+                    foreach ($categories as $category) {
+                        echo "<tr>
+                                <td>{$category['id']}</td>
+                                <td>{$category['name']}</td>
+                                <td>
+                                    <a  class='update' href='edit_categorie.php?id={$category['id']}'>Modifier</a>
+                                    <a  class='delete' href='categories.php?action=delete&id={$category['id']}'>Supprimer</a>
+                                </td>
+                              </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='3'>Aucune catégorie trouvée</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='3'>Aucun tag trouvé</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-    </div>
   </div>
   <script src="dashboard.js"></script>
    
