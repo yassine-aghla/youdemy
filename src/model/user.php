@@ -38,5 +38,10 @@ class User {
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-  
+    public static function banUser($userId) {
+        $conn = Database::getConnection();
+        $query = "DELETE FROM " . self::$table . " WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        return $stmt->execute([':id' => $userId]);
+    }
 }

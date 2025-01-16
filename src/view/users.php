@@ -84,7 +84,7 @@ $users = UsersController::getAllUsers();
                     </a>
                 </li>
                 <li>
-                    <a href="user.php">
+                    <a href="users.php">
                         <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>
                         </span>
