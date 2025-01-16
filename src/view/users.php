@@ -51,11 +51,11 @@ $users = UsersController::getAllUsers();
               
 
                 <li>
-                    <a href="Articles.php">
+                    <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">Articles</span>
+                        <span class="title">courses</span>
                     </a>
                 </li>
                 
@@ -72,7 +72,7 @@ $users = UsersController::getAllUsers();
                         <span class="icon">
                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">manage articles</span>
+                        <span class="title">manage courses</span>
                     </a>
                 </li>
                 <li>

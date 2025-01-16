@@ -22,20 +22,21 @@ class UsersController {
     }
 
 
-    // public static function login($email, $password) {
-    //     $user = User::findUserByEmail($email);
-    //     if ($user && password_verify($password, $user['password_hash'])) {
-    //         session_start();
-    //         $_SESSION['user'] = [
-    //             'id' => $user['id'],
-    //             'username' => $user['username'],
+    public static function login($email, $password) {
+        $user = User::findUserByEmail($email);
+        if ($user && password_verify($password, $user['password'])) {
+            session_start();
+            $_SESSION['user'] = [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'role'=>$user['role'],
                 
-    //         ];
+            ];
             
-    //         return true;
-    //     }
-    //     return false;
-    // }
+            return true;
+        }
+        return false;
+    }
     public static function getAllUsers() {
         return User::getAllUsers();
     }

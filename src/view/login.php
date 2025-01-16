@@ -1,5 +1,7 @@
 <?php
- require __DIR__.'/../controller/users.php';
+require_once '../../vendor/autoload.php';
+
+use App\Controller\UsersController;
  
 ?>
 
@@ -91,11 +93,11 @@
     </form>
     <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__.'/../controller/users.php';
+    require_once __DIR__.'/../Controller/UsersController.php';
     $isLoggedIn = UsersController::login($_POST['email'], $_POST['password']);
     if ($isLoggedIn) {
         // session_start();
-    header("Location: dashboard.php");
+    header("Location:dashboard.php");
        
         exit;
     } else {
