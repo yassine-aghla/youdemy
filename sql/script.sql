@@ -35,6 +35,7 @@ CREATE TABLE tags (
 CREATE TABLE courses (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
+    contenu text  NOT NULL,
     description TEXT,
     video_path VARCHAR(255),
     document_path VARCHAR(255),
@@ -66,3 +67,4 @@ CREATE TABLE enrollments (
     FOREIGN KEY (student_id) REFERENCES users(id),
     FOREIGN KEY (course_id) REFERENCES courses(id)
 );
+select * from users;

@@ -1,4 +1,12 @@
-
+<?php
+require_once '../../vendor/autoload.php';
+use App\Controller\tags;
+use App\Controller\CategoriesController;
+$tag=new tags();
+$tags=$tag->displayTags();
+$categorie=new CategoriesController();
+$categories=$categorie->displayCategories();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,54 +16,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
     <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
 
-form {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #2d3748;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    label {
-        display: block;
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-    input, textarea, select, button {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #4a5568;
-        border-radius: 6px;
-        background-color: #4a5568;
-        color: #fff;
-        font-size: 1rem;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-    }
-    input:focus, textarea:focus, select:focus {
-        border-color: #63b3ed;
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(99, 179, 237, 0.5);
-    }
-    button {
-        background-color: #ecc94b;
-        border: none;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    button:hover {
-        background-color: #d69e2e;
-    }
-    .text-sm {
-        font-size: 0.875rem;
-        color: #a0aec0;
-        margin-top: -10px;
-    }     
+#form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin:auto;
+            display: none; 
+       
+        }
+
+        #form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color:#2a2185;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .tags-container {
+            margin-bottom: 10px;
+        }
+
+        .tags-container input[type="checkbox"] {
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+        .tags-container label{
+            color:#2a2185;
+        }
 h1 {
     text-align: center;
     color: #2c3e50;
@@ -154,7 +174,7 @@ a[href^="delete_article.php"]:hover {
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"><?php echo$_SESSION['user']['username'];?></span>
+                        <span class="title"></span>
                     </a>
                 </li>
            
@@ -169,7 +189,7 @@ a[href^="delete_article.php"]:hover {
                 
 
                 <li>
-                    <a href="Articles.php">
+                    <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
@@ -233,10 +253,11 @@ a[href^="delete_article.php"]:hover {
             </div>
   <!-- =============== formualire ================ -->
 
-  <button id="add-article-btn">Add Article</button>
-  
+  <button id="add-article-btn">Add cours</button>
+  <div id="form-container">
+  <h2>Ajouter un course</h2>
   <form action="" method="POST">
-     <h2>Ajouter un course</h2>
+
     <div>
         <label for="title">Course Title</label>
         <input type="text" id="title" name="title" placeholder="Enter course title" required>
@@ -257,32 +278,31 @@ a[href^="delete_article.php"]:hover {
         <label for="contenu_video">Video URL</label>
         <input type="url" id="contenu_video" name="contenu_video" placeholder="Enter video URL">
     </div>
-    <div id="document">
+    <div id="document" style="display:none;">
         <label for="contenu_document">Course Document</label>
         <textarea id="contenu_document" name="contenu_document" rows="4" placeholder="Enter course document"></textarea>
     </div>
-    <div>
-        <label for="categorie">Category</label>
-        <select id="categorie" name="categorie" required>
-            <option value="">-- Please choose a category --</option>
-            <?php foreach ($categories as $cat): ?>
-                <option value="<?php echo htmlspecialchars($cat['id']); ?>">
-                    <?php echo htmlspecialchars($cat['name']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <label for="tags">Tags</label>
-        <select id="tags" name="tags[]" multiple>
-            <?php foreach ($tags as $tag): ?>
-                <option value="<?php echo htmlspecialchars($tag['id']); ?>">
-                    <?php echo htmlspecialchars($tag['name']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <p class="text-sm">Hold down the Ctrl (Windows) or Command (Mac) key to select multiple tags.</p>
-    </div>
+           <div>
+                <label for="category_id">Catégorie</label>
+                <select id="category_id" name="category_id" required>
+                    <option value="" disabled selected>Choisir une catégorie</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+    <div class="tags-container">
+                <label style="color:black;">Tags</label>
+                <?php foreach ($tags as $tag): ?>
+                    <div>
+                <table>
+                       <td> <label for="tag_<?= $tag['id'] ?>"><?= htmlspecialchars($tag['name']) ?></label></td>
+                       <td> <input type="checkbox" id="tag_<?= $tag['id'] ?>" name="tags[]" value="<?= $tag['id'] ?>"></td>
+                       
+                </table>
+                    </div>
+                <?php endforeach; ?>
+                </div>
     <div>
         <label for="featured_image">Featured Image URL</label>
         <input type="url" id="featured_image" name="featured_image" placeholder="Enter image URL" required>
@@ -291,63 +311,41 @@ a[href^="delete_article.php"]:hover {
         <label for="scheduled_date">Scheduled Date</label>
         <input type="date" id="scheduled_date" name="scheduled_date" required>
     </div>
-    <button type="submit">Ajouter Course</button>
+    <button type="submit" name="action" value="create">Ajouter Course</button>
 </form>
-
-  <h1>Liste des Articles</h1>
-    <table>
+            </div>
+  <h1>Liste des courses</h1>
+  <h2>Cours Vidéo</h2>
+    <table border="1">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Titre</th>
-                <th>Extrait</th>
-                <!-- <th>Statut</th> -->
-                <th>Date de Programmation</th>
-                <th>Catégorie</th>
-                <th>Auteur</th>
-                <th>Date de Création</th>
-                <th>Image</th>
+                <th>Title</th>
+                <th>created at</th>
                 <th>Tags</th>
-                <th>Actions</th>
+                <th>Video Path</th>
+                <th>created at</th>
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($articles)): ?>
-                <?php foreach ($articles as $article): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($article['id']) ?></td>
-                        <td><?= htmlspecialchars($article['title']) ?></td>
-                        <td><?= htmlspecialchars($article['excerpt']) ?></td>
-                        <!-- <td>
-                            <?= htmlspecialchars($article['status']) ?>
-                        </td> -->
-                        <td><?= htmlspecialchars($article['scheduled_date'] ?: 'Non programmé') ?></td>
-                        <td><?= htmlspecialchars($article['category_name']) ?></td>
-                        <td><?= htmlspecialchars($article['author_name']) ?></td>
-                        <td><?= htmlspecialchars($article['created_at']) ?></td>
-                        <td>
-                            <?php if ($article['featured_image']): ?>
-                                <img src="<?= htmlspecialchars($article['featured_image']) ?>" alt="Image" style="width: 60px; height: auto;">
-                            <?php else: ?>
-                                Aucune image
-                            <?php endif; ?>
-
-                        </td>
-                        <td><?= htmlspecialchars($article['tag_names'] ?: 'Aucun tag') ?></td>
-                        <td>
-                            <a href="edit_article.php?id=<?= $article['id'] ?>">Modifier</a> |
-                            <a href="delete_article.php?id=<?= $article['id'] ?>" onclick="return confirm('Voulez-vous vraiment supprimer cet article ?');">Supprimer</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="10">Aucun article trouvé.</td>
-                </tr>
-            <?php endif; ?>
+         
         </tbody>
     </table>
 
+    <h2>Cours Document</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Categorie</th>
+                <th>Tags</th>
+                <th>Document Path</th>
+                <th>created at</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
     <script>
        
         const addArticleBtn = document.getElementById('add-article-btn');
@@ -360,11 +358,30 @@ a[href^="delete_article.php"]:hover {
             addArticleBtn.style.display = 'none'; 
         });
 
-        
-        submitBtn.addEventListener('click', () => {
-            formContainer.style.display = 'none';
-            addArticleBtn.style.display = 'block'; 
-        });
+        // submitBtn.addEventListener('click', () => {
+        //     formContainer.style.display = 'none';
+        //     addArticleBtn.style.display = 'block'; 
+        // });
+
+    const contenuSelect = document.getElementById('contenu');
+    const videoField = document.getElementById('video');
+    const documentField = document.getElementById('document');
+    
+
+    contenuSelect.addEventListener('change', () => {
+        const selectedValue = contenuSelect.value;
+        console.log(selectedValue)
+        if (selectedValue ==='video') {
+            videoField.style.display = 'block';
+            documentField.style.display = 'none';
+        } else if (selectedValue ==='document') {
+            videoField.style.display = 'none';
+            documentField.style.display = 'block';
+        } else {
+            videoField.style.display = 'none';
+            documentField.style.display = 'none';
+        }
+    });
     </script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
    <script src="assets/js/chartsJS.js"></script>

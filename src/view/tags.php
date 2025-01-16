@@ -145,7 +145,7 @@ require_once __DIR__.'/../controller/tags.php';
                     </a>
                 </li>
                 <li>
-                    <a href="Articles.php">
+                    <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>

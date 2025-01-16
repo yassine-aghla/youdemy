@@ -41,8 +41,7 @@ class CategoriesController extends Category  {
   
 }
 
-// CategoriesController::handleRequest();
-// $categories = CategoriesController::displayCategories();
+
 $categorie=new CategoriesController();
 $categorie->handleRequest();
 $categories=$categorie->displayCategories();

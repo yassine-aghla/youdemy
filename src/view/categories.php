@@ -1,6 +1,6 @@
 <?php
 require_once '../../vendor/autoload.php';
-require_once __DIR__.'/../controller/categorieController.php';
+require_once __DIR__.'/../controller/categoriesController.php';
 // use App\Controller\tags;
 ?>
 <!DOCTYPE html>
@@ -145,7 +145,7 @@ require_once __DIR__.'/../controller/categorieController.php';
                     </a>
                 </li>
                 <li>
-                    <a href="Articles.php">
+                    <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
