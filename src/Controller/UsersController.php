@@ -36,4 +36,7 @@ class UsersController {
     //     }
     //     return false;
     // }
+    public static function getAllUsers() {
+        return User::getAllUsers();
+    }
 }
