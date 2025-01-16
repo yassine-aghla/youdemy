@@ -6,7 +6,7 @@ use App\Model\DocumentCourse;
 use App\Model\Course;   
 // Récupérer la connexion PDO
 $pdo = Database::getConnection();
-// Gérer la soumission du formulaire
+// create the course
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $tags = $_POST['tags'];
     $content=$_POST['content'];
     $contenu = $_POST['contenu'];
-    var_dump($contenu);
+    // var_dump($contenu);
     if ($contenu === 'video') {
       
         $video_path = $_POST['contenu_video'];
@@ -27,31 +27,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
     $course->save($pdo);
 }
-// Récupérer et afficher les cours
-
+// update cours
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
+    var_dump($_POST);
+    $id = $_POST['course_id'];
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $category_id = $_POST['category_id'];
-    $tags = $_POST['tags'];
-    $content=$_POST['content'];
-    $contenu = $_POST['contenu'];
+    $category_id =$_POST['category_id']; // Ensure category_id is an integer
+    // $tags = $_POST['tags'];
+    $content = $_POST['content'];
+    // $contenu = $_POST['contenu'];
 
-    // Mise à jour dans la base de données
-    $stmt = $pdo->prepare("UPDATE courses SET title = :title, description = :description, contenu = :contenu
 
-    
-     WHERE id = :id");
-    $stmt->execute([
-        ':title' => $title,
-        ':description' => $description,
-        ':id' => $id,
-        ':contenu' => $contenu
-    ]);
+    // SQL query to update course
+    $query = "UPDATE courses SET title = ?, description = ?, contenu = ?, category_id = ? WHERE id = ?";
 
-    // Rediriger après mise à jour
+    // Prepare and execute the query
+    $stmt = $pdo->prepare($query);
+
+    // Check if inputs are valid and execute the statement
+
+
+    $stmt->execute([$title, $description, $content, $category_id, $id]);
+
+    // Redirect after update
     header('Location: ../view/course.php');
     exit;
 }
 
-   
+

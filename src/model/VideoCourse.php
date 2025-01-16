@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 class VideoCourse extends Course
@@ -6,9 +7,9 @@ class VideoCourse extends Course
     private $video_path;
 
 
-    public function __construct($title, $description, $category_id, $tags, $video_path,$content)
+    public function __construct($title, $description, $category_id, $tags, $video_path, $content)
     {
-        parent::__construct($title, $description, $category_id, $tags,$content);
+        parent::__construct($title, $description, $category_id, $tags, $content);
         $this->video_path = $video_path;
     }
 
@@ -29,7 +30,7 @@ class VideoCourse extends Course
         ]);
 
         $course_id = $pdo->lastInsertId();
-        $this->id=$course_id;
+        $this->id = $course_id;
         $this->saveTags($pdo, $course_id);
     }
 
@@ -62,5 +63,4 @@ class VideoCourse extends Course
 
         return $result ?: [];
     }
-   
 }

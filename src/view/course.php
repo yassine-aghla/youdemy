@@ -355,10 +355,10 @@ a[href^="delete_article.php"]:hover {
             <td><?= $course['video_path'];  ?></td>
             <td><?= $course['created_at'];  ?></td>
             <td>
-                <form method='GET' action='../controller/course_controller.php' style='display:inline;'>
+                <form method='GET' action='../controller/CourseController.php' style='display:inline;'>
                     <input type='hidden' name='action' value='delete'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
-                    <button type='submit' name="supprimer-course">Supprimer</button>
+                    <button type='submit' name="delete">Supprimer</button>
                 </form>
                 <form method='GET' action='edit_course.php' style='display:inline;'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
@@ -400,7 +400,7 @@ a[href^="delete_article.php"]:hover {
             <td><?= $course['document_path'];  ?></td>
             <td><?= $course['created_at'];  ?></td>
             <td>
-                <form method='GET' action='../controller/course_controller.php' style='display:inline;'>
+                <form method='GET' action='../controller/CourseController.php' style='display:inline;'>
                     <input type='hidden' name='action' value='delete'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
                     <button type='submit' name="supprimer-course">Supprimer</button>

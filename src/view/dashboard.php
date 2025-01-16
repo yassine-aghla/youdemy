@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +10,7 @@
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
+
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
@@ -19,12 +19,12 @@
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
-                        <ion-icon name="person-circle-outline"></ion-icon>
+                            <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
                         <span class="title"></span>
                     </a>
                 </li>
-              
+
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -33,22 +33,22 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="course.php">
                         <span class="icon">
-                        <ion-icon name="document-text-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
                         <span class="title">courses</span>
                     </a>
                 </li>
-               
 
-                
+
+
                 <li>
                     <a href="categories.php">
                         <span class="icon">
-                           <ion-icon name="grid-outline"></ion-icon>
+                            <ion-icon name="grid-outline"></ion-icon>
                         </span>
                         <span class="title">Categorie</span>
                     </a>
@@ -56,7 +56,7 @@
                 <li>
                     <a href="articleDash.php">
                         <span class="icon">
-                           <ion-icon name="document-text-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
                         <span class="title">manage courses</span>
                     </a>
@@ -64,7 +64,7 @@
                 <li>
                     <a href="tags.php">
                         <span class="icon">
-                        <ion-icon name="pricetag-outline"></ion-icon>
+                            <ion-icon name="pricetag-outline"></ion-icon>
                         </span>
                         <span class="title">Tags</span>
                     </a>
@@ -72,20 +72,20 @@
                 <li>
                     <a href="user.php">
                         <span class="icon">
-                        <ion-icon name="person-outline"></ion-icon>
+                            <ion-icon name="person-outline"></ion-icon>
                         </span>
                         <span class="title">User</span>
                     </a>
                 </li>
-                
+
                 <li>
-    <a href="logout.php"> 
-        <span class="icon">
-            <ion-icon name="log-out-outline"></ion-icon>
-        </span>
-        <span class="title">Sign Out</span>
-    </a>
-</li>
+                    <a href="logout.php">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="iconBx">
-                    <ion-icon name="document-text-outline"></ion-icon>
+                        <ion-icon name="document-text-outline"></ion-icon>
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="iconBx">
-                    <ion-icon name="person-outline"></ion-icon>
+                        <ion-icon name="person-outline"></ion-icon>
                     </div>
                 </div>
 
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="iconBx">
-                    <ion-icon name="pricetag-outline"></ion-icon>
+                        <ion-icon name="pricetag-outline"></ion-icon>
                     </div>
                 </div>
 
@@ -150,8 +150,8 @@
                     </div>
 
                     <div class="iconBx">
-                    <ion-icon name="grid-outline"></ion-icon>
-                        
+                        <ion-icon name="grid-outline"></ion-icon>
+
                     </div>
                 </div>
             </div>
@@ -161,20 +161,20 @@
                 <div class="chart"><canvas id="chart-1"></canvas> </div>
                 <div class="chart"> <canvas id="chart-2"></canvas> </div>
             </div>
-    
-     
 
 
 
-            
+
+
+
             <script src="dashboard.js"></script>
-   
 
-   <!-- ======= Charts JS ====== -->
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-   <script src="assets/js/chartsJS.js"></script>
 
-   <!-- ====== ionicons ======= -->
-   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            <!-- ======= Charts JS ====== -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+            <script src="assets/js/chartsJS.js"></script>
+
+            <!-- ====== ionicons ======= -->
+            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

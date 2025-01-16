@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 require_once __DIR__ . '/../Controller/CourseController.php';
+
 use App\Config\Database;
 
 
@@ -11,10 +12,10 @@ use App\Model\VideoCourse;
 // use App\Controller\CourseController;
 
 $pdo = Database::getConnection();
-$tag=new tags();
-$tags=$tag->displayTags();
-$categorie=new CategoriesController();
-$categories=$categorie->displayCategories();
+$tag = new tags();
+$tags = $tag->displayTags();
+$categorie = new CategoriesController();
+$categories = $categorie->displayCategories();
 
 // Connexion à la base de données
 $pdo = Database::getConnection();
@@ -30,10 +31,11 @@ if (!$course) {
     echo "Cours introuvable.";
     exit;
 }
+var_dump($course['id']);
+// die();
 ?>
-
 <form action="../controller/CourseController.php" method="POST">
-
+    <input type="hidden" name="course_id" value="<?=  $course['id'] ?>">
     <div>
         <label for="title">Course Title</label>
         <input type="text" id="title" name="title" placeholder="Enter course title" required>
@@ -46,14 +48,14 @@ if (!$course) {
         <label for="description">Course Description</label>
         <textarea id="description" name="description" rows="4" placeholder="Enter course description" required></textarea>
     </div>
-    <div>
+    <!-- <div>
         <label for="contenu">Course Content Type</label>
         <select id="contenu" name="contenu" required>
             <option value="">--Please choose content type--</option>
             <option value="video">Video</option>
             <option value="document">Document</option>
         </select>
-    </div>
+    </div> -->
     <div id="video">
         <label for="contenu_video">Video URL</label>
         <input type="url" id="contenu_video" name="contenu_video" placeholder="Enter video URL">
@@ -62,34 +64,31 @@ if (!$course) {
         <label for="contenu_document">Course Document</label>
         <textarea id="contenu_document" name="contenu_document" rows="4" placeholder="Enter course document"></textarea>
     </div>
-           <div>
-                <label for="category_id">Catégorie</label>
-                <select id="category_id" name="category_id" required>
-                    <option value="" disabled selected>Choisir une catégorie</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+    <div>
+        <label for="category_id">Catégorie</label>
+        <select id="category_id" name="category_id" required>
+            <option value="" disabled selected>Choisir une catégorie</option>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
     <div class="tags-container">
-                <label style="color:black;">Tags</label>
-                <?php foreach ($tags as $tag): ?>
-                    <div>
+        <label style="color:black;">Tags</label>
+        <?php foreach ($tags as $tag): ?>
+            <div>
                 <table>
-                       <td> <label for="tag_<?= $tag['id'] ?>"><?= htmlspecialchars($tag['name']) ?></label></td>
-                       <td> <input type="checkbox" id="tag_<?= $tag['id'] ?>" name="tags[]" value="<?= $tag['id'] ?>"></td>
-                       
+                    <td> <label for="tag_<?= $tag['id'] ?>"><?= htmlspecialchars($tag['name']) ?></label></td>
+                    <td> <input type="checkbox" id="tag_<?= $tag['id'] ?>" name="tags[]" value="<?= $tag['id'] ?>"></td>
+
                 </table>
-                    </div>
-                <?php endforeach; ?>
-                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
     <div>
         <label for="featured_image">Featured Image URL</label>
         <input type="url" id="featured_image" name="featured_image" placeholder="Enter image URL" required>
     </div>
-    <div>
-        <label for="scheduled_date">Scheduled Date</label>
-        <input type="date" id="scheduled_date" name="scheduled_date" required>
-    </div>
-    <button type="submit" name="update-course" value="update">Ajouter Course</button>
+
+    <button type="submit" name="update-course" value="update">Update Course</button>
 </form>
