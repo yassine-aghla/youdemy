@@ -1,6 +1,6 @@
 <?php
 require_once '../../vendor/autoload.php';
-require __DIR__.'/../controller/categorieController.php';
+require __DIR__.'/../controller/categoriesController.php';
 use App\Model\category;
 ?>
 <!DOCTYPE html>

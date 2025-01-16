@@ -1,8 +1,14 @@
 <?php
 require_once '../../vendor/autoload.php';
+require_once __DIR__ . '/../Controller/CourseController.php';
 use App\Controller\tags;
 use App\Controller\CategoriesController;
-use App\Controller\CourseController;
+use App\Config\Database;
+use App\Model\VideoCourse;
+use App\Model\DocumentCourse;
+// use App\Controller\CourseController;
+
+$pdo = Database::getConnection();
 $tag=new tags();
 $tags=$tag->displayTags();
 $categorie=new CategoriesController();
@@ -325,14 +331,43 @@ a[href^="delete_article.php"]:hover {
         <thead>
             <tr>
                 <th>Title</th>
-                <th>created at</th>
+                <th>content</th>
+                <th>categorie</th>
                 <th>Tags</th>
                 <th>Video Path</th>
                 <th>created at</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-         
+                    
+        <?php 
+        $courses = VideoCourse::displayCourses($pdo);
+                    // var_dump($courses);
+            foreach($courses as $course) :
+        ?>
+
+        <tr>
+            <td><?= $course['title'];  ?></td>
+            <td><?= $course['contenu'];  ?></td>
+            <td><?= $course['category_name'];  ?></td>
+            <td><?= $course['tags'];  ?></td>
+            <td><?= $course['video_path'];  ?></td>
+            <td><?= $course['created_at'];  ?></td>
+            <td>
+                <form method='GET' action='../controller/course_controller.php' style='display:inline;'>
+                    <input type='hidden' name='action' value='delete'>
+                    <input type='hidden' name='id' value='<?= $course['id'] ?>'>
+                    <button type='submit' name="supprimer-course">Supprimer</button>
+                </form>
+                <form method='GET' action='edit_course.php' style='display:inline;'>
+                    <input type='hidden' name='id' value='<?= $course['id'] ?>'>
+                    <button type='submit'>Modifier</button>
+                </form>
+            </td>
+        </tr>
+         <!-- ajouter les cours video dynamiquement -->
+          <?php endforeach;?>
         </tbody>
     </table>
 
@@ -341,14 +376,48 @@ a[href^="delete_article.php"]:hover {
         <thead>
             <tr>
                 <th>Title</th>
+                <th>content</th>
                 <th>Categorie</th>
                 <th>Tags</th>
                 <th>Document Path</th>
                 <th>created at</th>
+                <th>Action</th>
             </tr>
+            </thead>
+        <tbody>
+                    
+        <?php 
+        $courses = DocumentCourse::displayCourses($pdo);
+                    // var_dump($courses);
+            foreach($courses as $course) :
+        ?>
+
+            <tr>
+            <td><?= $course['title'];  ?></td>
+            <td><?= $course['contenu'];  ?></td>
+            <td><?= $course['category_name'];  ?></td>
+            <td><?= $course['tags'];  ?></td>
+            <td><?= $course['document_path'];  ?></td>
+            <td><?= $course['created_at'];  ?></td>
+            <td>
+                <form method='GET' action='../controller/course_controller.php' style='display:inline;'>
+                    <input type='hidden' name='action' value='delete'>
+                    <input type='hidden' name='id' value='<?= $course['id'] ?>'>
+                    <button type='submit' name="supprimer-course">Supprimer</button>
+                </form>
+                <form method='GET' action='edit_course.php' style='display:inline;'>
+                    <input type='hidden' name='id' value='<?= $course['id'] ?>'>
+                    <button type='submit'>Modifier</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach;?>
         </thead>
         <tbody>
-          
+
+        
+        
+          <!-- ajouter les cours doucument dynamiquement -->
         </tbody>
     </table>
     <script>
