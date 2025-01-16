@@ -1,5 +1,7 @@
 <?php
-require __DIR__.'/../controller/users.php';
+require_once '../../vendor/autoload.php';
+
+use App\Controller\UsersController;
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +88,11 @@ require __DIR__.'/../controller/users.php';
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
         
+        <label for="role">Role</label>
+    <select id="role" name="role" required>
+        <option value="Etudiant">Student</option>
+        <option value="Enseignant">Teacher</option>
+    </select>
         
         
         <button type="submit" name="submit">Sign Up</button>
@@ -96,7 +103,7 @@ require __DIR__.'/../controller/users.php';
     </form>
     <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__.'/../controller/users.php';
+    require_once __DIR__.'/../Controller/UsersController.php';
     $response = UsersController::signup($_POST);
     echo $response;
 }

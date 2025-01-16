@@ -1,18 +1,23 @@
 <?php
-require_once __DIR__.'/../config/Database.php';
 
+namespace App\Model;
+
+use App\Config\Database;
+use PDO;
 class User {
     private static $table = 'users';
 
     public static function createUser($data) {
         $conn = Database::getConnection();
-        $query = "INSERT INTO " . self::$table . " (username, email, password_hash) 
-                  VALUES (:username, :email, :password_hash )";
+        $query = "INSERT INTO " . self::$table . " (username, email, password,role) 
+                  VALUES (:username, :email, :password, :role)";
         $stmt = $conn->prepare($query); 
         return $stmt->execute([
             ':username' => $data['username'],
             ':email' => $data['email'],
-            ':password_hash' => $data['password_hash'],
+            ':password' => $data['password'],
+            ':role' => $data['role'],
+
             
         ]);
     }

@@ -68,4 +68,4 @@ CREATE TABLE enrollments (
     FOREIGN KEY (course_id) REFERENCES courses(id)
 );
 
-select * from courses;
+select * from users;
