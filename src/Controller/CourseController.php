@@ -34,12 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $category_id =$_POST['category_id']; // Ensure category_id is an integer
-    // $tags = $_POST['tags'];
+     $tags = $_POST['tags'];
     $content = $_POST['content'];
     // $contenu = $_POST['contenu'];
 $query = "UPDATE courses SET title = ?, description = ?, contenu = ?, category_id = ? WHERE id = ?";
  $stmt = $pdo->prepare($query);
  $stmt->execute([$title, $description, $content, $category_id, $id]);
+ $deleteTagsQuery = "DELETE FROM course_tags WHERE course_id = ?";
+    $stmt = $pdo->prepare($deleteTagsQuery);
+    $stmt->execute([$id]);
+
+    // Ajouter les nouveaux tags associés au cours
+    $insertTagsQuery = "INSERT INTO course_tags (course_id, tag_id) VALUES (?, ?)";
+    $stmt = $pdo->prepare($insertTagsQuery);
+
+    foreach ($tags as $tagId) {
+        $stmt->execute([$id, $tagId]);
+    }
+
     header('Location: ../view/course.php');
     exit;
 }

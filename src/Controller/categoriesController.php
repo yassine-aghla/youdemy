@@ -35,9 +35,9 @@ class CategoriesController extends Category  {
     public function displayCategories() {
         return   $this->getAllCategories();
     }
-    public static function getCategoryCount() {
-        return   $this->countCategories();
-    }
+    // public static function getCategoryCount() {
+    //     return   $this->countCategories();
+    // }
   
 }
 
