@@ -21,7 +21,7 @@ $categories = $categorie->displayCategories();
 $pdo = Database::getConnection();
 
 // Récupérer l'ID du cour
-var_dump($_GET);
+
 $id = $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM courses WHERE id = :id");
 $stmt->execute([':id' => $id]);
@@ -33,6 +33,172 @@ if (!$course) {
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+
+#form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin:auto;
+             
+       
+        }
+
+        #form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color:#2a2185;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .tags-container {
+            margin-bottom: 10px;
+        }
+
+        .tags-container input[type="checkbox"] {
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+        .tags-container label{
+            color:#2a2185;
+        }
+
+
+
+    </style>
+    </head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="dashboard.php">
+                        <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title"></span>
+                    </a>
+                </li>
+           
+                <li>
+                    <a href="dashboard.php">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                
+
+                <li>
+                    <a href="course.php">
+                        <span class="icon">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">Articles</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="categories.php">
+                        <span class="icon">
+                           <ion-icon name="grid-outline"></ion-icon>
+                        </span>
+                        <span class="title">Categorie</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="tags.php">
+                        <span class="icon">
+                        <ion-icon name="pricetag-outline"></ion-icon>
+                        </span>
+                        <span class="title">Tags</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="user.php">
+                        <span class="icon">
+                        <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="title">Auteur</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="sign_up.php">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+  <!-- =============== Main ================ -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="../../assets/me.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- le formulaire de modification -->
+            <div id="form-container">
+            <h2>Modifier un course</h2>
 <form action="../controller/CourseController.php" method="POST">
     <input type="hidden" name="course_id" value="<?=  $course['id'] ?>">
     <div>
@@ -102,3 +268,36 @@ if (!$course) {
 
     <button type="submit" name="update-course" value="update">Update Course</button>
 </form>
+    </div>
+<script>
+       
+      
+
+   const contenuSelect = document.getElementById('contenu');
+   const videoField = document.getElementById('video');
+   const documentField = document.getElementById('document');
+   
+
+   contenuSelect.addEventListener('change', () => {
+       const selectedValue = contenuSelect.value;
+       console.log(selectedValue)
+       if (selectedValue ==='video') {
+           videoField.style.display = 'block';
+           documentField.style.display = 'none';
+       } else if (selectedValue ==='document') {
+           videoField.style.display = 'none';
+           documentField.style.display = 'block';
+       } else {
+           videoField.style.display = 'none';
+           documentField.style.display = 'none';
+       }
+   });
+   </script>
+       <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+  <script src="assets/js/chartsJS.js"></script>
+
+  <!-- ====== ionicons ======= -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
     $id = $_POST['course_id'];
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $category_id =$_POST['category_id']; // Ensure category_id is an integer
+    $category_id =$_POST['category_id']; 
      $tags = $_POST['tags'];
     $content = $_POST['content'];
     // $contenu = $_POST['contenu'];
