@@ -2,6 +2,7 @@
 require_once '../../vendor/autoload.php';
 use App\Controller\tags;
 use App\Controller\CategoriesController;
+use App\Controller\CourseController;
 $tag=new tags();
 $tags=$tag->displayTags();
 $categorie=new CategoriesController();
@@ -256,11 +257,15 @@ a[href^="delete_article.php"]:hover {
   <button id="add-article-btn">Add cours</button>
   <div id="form-container">
   <h2>Ajouter un course</h2>
-  <form action="" method="POST">
+  <form action="../controller/CourseController.php" method="POST">
 
     <div>
         <label for="title">Course Title</label>
         <input type="text" id="title" name="title" placeholder="Enter course title" required>
+    </div>
+    <div>
+        <label for="content">course content </label>
+        <input type="text" id="content" name="content" placeholder="Enter course content" required>
     </div>
     <div>
         <label for="description">Course Description</label>
