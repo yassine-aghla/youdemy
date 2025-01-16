@@ -37,22 +37,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
     // $tags = $_POST['tags'];
     $content = $_POST['content'];
     // $contenu = $_POST['contenu'];
-
-
-    // SQL query to update course
-    $query = "UPDATE courses SET title = ?, description = ?, contenu = ?, category_id = ? WHERE id = ?";
-
-    // Prepare and execute the query
-    $stmt = $pdo->prepare($query);
-
-    // Check if inputs are valid and execute the statement
-
-
-    $stmt->execute([$title, $description, $content, $category_id, $id]);
-
-    // Redirect after update
+$query = "UPDATE courses SET title = ?, description = ?, contenu = ?, category_id = ? WHERE id = ?";
+ $stmt = $pdo->prepare($query);
+ $stmt->execute([$title, $description, $content, $category_id, $id]);
     header('Location: ../view/course.php');
     exit;
 }
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+        $id = $_GET['id'];
 
+        // Suppression de la base de données
+        $stmt = $pdo->prepare("DELETE FROM courses WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+        // Rediriger après suppression
+        header('Location: ../view/course.php');
+        exit;
+    }
+}
 
