@@ -6,6 +6,18 @@ use App\Controller\CategoriesController;
 use App\Config\Database;
 use App\Model\VideoCourse;
 use App\Model\DocumentCourse;
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header('Location:index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+$role = $_SESSION['user']['role'];
+
 // use App\Controller\CourseController;
 
 $pdo = Database::getConnection();
@@ -177,6 +189,7 @@ a[href^="delete_article.php"]:hover {
         <div class="navigation">
             <ul>
                 <li>
+                <?php if ($role==='Admin'): ?>
                     <a href="dashboard.php">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
@@ -193,17 +206,18 @@ a[href^="delete_article.php"]:hover {
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                
-
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">Articles</span>
+                        <span class="title">courses</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -222,16 +236,16 @@ a[href^="delete_article.php"]:hover {
                     </a>
                 </li>
                 <li>
-                    <a href="user.php">
+                    <a href="users.php">
                         <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>
                         </span>
                         <span class="title">Auteur</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
                 <li>
-                    <a href="sign_up.php">
+                    <a href="../../pages/logout.php">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>

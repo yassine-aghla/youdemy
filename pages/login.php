@@ -94,13 +94,32 @@ use App\Controller\UsersController;
     <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once __DIR__.'/../src/Controller/UsersController.php';
+    session_start();
+
     $isLoggedIn = UsersController::login($_POST['email'], $_POST['password']);
-    if ($isLoggedIn) {
-        header("Location:../src/view/dashboard.php");
+    
+   var_dump($_SESSION);
+    if (isset($_SESSION['user'])) {
+        $role = $_SESSION['user']['role'];
+
+        if ($role === 'Admin') {
+ 
+          header("Location:../src/view/dashboard.php");
+        } elseif ($role ==='Enseignant') {
+
+            header("Location:../src/view/course.php");
+        } else{
+
+            header("Location:../public/index.php");
+        }
+        // header("Location:../src/view/dashboard.php");
          exit;
     } else {
         echo "Invalid credentials!";
     }
+
+    // session_unset();
+    // session_destroy();
 }
 
 ?>

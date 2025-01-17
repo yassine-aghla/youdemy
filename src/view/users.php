@@ -68,7 +68,7 @@ $users = UsersController::getAllUsers();
                     </a>
                 </li>
                 <li>
-                    <a href="articleDash.php">
+                    <a href="courseDash.php">
                         <span class="icon">
                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>

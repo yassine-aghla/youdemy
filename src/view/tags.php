@@ -128,7 +128,7 @@ require_once __DIR__.'/../controller/tags.php';
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="../includes/dashboard.php">
+                    <a href="dashboard.php">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
@@ -161,7 +161,7 @@ require_once __DIR__.'/../controller/tags.php';
                     </a>
                 </li>
                 <li>
-                    <a href="articleDash.php">
+                    <a href="courseDash.php">
                         <span class="icon">
                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
@@ -177,7 +177,7 @@ require_once __DIR__.'/../controller/tags.php';
                     </a>
                 </li>
                 <li>
-                    <a href="user.php">
+                    <a href="users.php">
                         <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>
                         </span>
@@ -186,7 +186,7 @@ require_once __DIR__.'/../controller/tags.php';
                 </li>
             
                 <li>
-                    <a href="sign_up.php">
+                    <a href="../../pages/logout.php">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>

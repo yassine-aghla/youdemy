@@ -1,3 +1,17 @@
+<?php
+// session_start();
+// if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+//     header('Location:../../public/index.php');
+//     exit();
+// }
+// if (!isset($_SESSION['user'])) {
+//     header("Location: login.php");
+//     exit();
+// }
+session_start();
+$role =$_SESSION['user']['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +30,7 @@
     <div class="container">
         <div class="navigation">
             <ul>
+            
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -24,7 +39,7 @@
                         <span class="title"></span>
                     </a>
                 </li>
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -33,7 +48,8 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
@@ -42,9 +58,9 @@
                         <span class="title">courses</span>
                     </a>
                 </li>
+                <?php endif; ?>
 
-
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -70,14 +86,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="user.php">
+                    <a href="users.php">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
                         <span class="title">User</span>
                     </a>
                 </li>
-
+                <?php endif; ?>
                 <li>
                 <a href="../../pages/logout.php">
                         <span class="icon">

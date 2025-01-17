@@ -27,7 +27,30 @@
     <p>Explore our platform and unlock your learning potential.</p>
   </main>
 
-  
+  <section class="courses-section">
+  <h2>Our Courses</h2>
+  <div class="courses-container">
+    <div class="course-card">
+      <img src="https://via.placeholder.com/300x200" alt="Course Image">
+      <h3>Web Development</h3>
+      <p>Learn to build responsive websites with HTML, CSS, and JavaScript.</p>
+      <button>View Course</button>
+    </div>
+ <div class="course-card">
+      <img src="https://via.placeholder.com/300x200" alt="Course Image">
+      <h3>Data Science</h3>
+      <p>Master data analysis and visualization using Python.</p>
+      <button>View Course</button>
+    </div>
+    <div class="course-card">
+      <img src="https://via.placeholder.com/300x200" alt="Course Image">
+      <h3>Graphic Design</h3>
+      <p>Unleash your creativity with tools like Photoshop and Illustrator.</p>
+      <button>View Course</button>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-container">
     <div class="footer-column">
@@ -39,8 +62,8 @@
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#courses">Courses</a></li>
-        <li><a href="#signup">Signup</a></li>
-        <li><a href="#login">Login</a></li>
+        <li><a href="../pages/sign_up.php">Signup</a></li>
+        <li><a href="../pages/login.php">Login</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
     </div>

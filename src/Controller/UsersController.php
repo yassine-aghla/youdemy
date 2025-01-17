@@ -24,14 +24,19 @@ class UsersController {
 
     public static function login($email, $password) {
         $user = User::findUserByEmail($email);
+        echo "<pre>";
+        // var_dump($user);
+        echo "</pre>";
         if ($user && password_verify($password, $user['password'])) {
-            session_start();
+            // session_start();
+
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'username' => $user['username'],
                 'role'=>$user['role'],
                 
             ];
+            // $_SESSION['user'] = $user;
             
             return true;
         }
