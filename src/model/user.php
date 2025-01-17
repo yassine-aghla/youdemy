@@ -42,7 +42,7 @@ abstract class User {
     }
     public static function getAllUsers(){
         $conn = Database::getConnection();
-        $query = "SELECT * FROM users  WHERE is_active = true ";
+        $query = "SELECT * FROM users  ";
         $stmt = $conn->prepare($query);
         $stmt->execute();
 

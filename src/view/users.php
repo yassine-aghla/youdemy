@@ -134,6 +134,7 @@ $role = $_SESSION['user']['role'];
                 <th>Nom d'utilisateur</th>
                 <th>Email</th>
                 <th>Rôle</th>
+                <th>statuts</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -146,6 +147,11 @@ $role = $_SESSION['user']['role'];
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
                     <td><?php echo htmlspecialchars($user['email']); ?></td>
                     <td><?php echo htmlspecialchars($user['role']); ?></td>
+                    <td><?php  if ($user['is_active'] == 0) {
+                    echo "Banni ";
+                    }else{
+                        echo "actif";
+                    } ?></td>
                     <td>
                     <!-- Supprimer -->
                     <form action="..\controller\delete_user.php" method="POST" style="display:inline;">
@@ -154,16 +160,22 @@ $role = $_SESSION['user']['role'];
                     </form>
 
                     <!-- Banner -->
-                    <form action="ban_user.php" method="POST" style="display:inline;">
+                    <form action="..\controller\ban_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                         <button type="submit">Banner</button>
                     </form>
 
                     <!-- Activer -->
-                    <form action="activate_user.php" method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                        <button type="submit">Activer</button>
-                    </form>
+                    <?php 
+  
+    if ($user['is_active'] == 0) {
+        echo "<form action='..\controller\activate_user.php' method='POST' style='display:inline;'>
+                  <input type='hidden' name='id' value='" . $user['id'] . "'>
+                  <button type='submit'>Réactiver</button>
+              </form>";
+    }
+    echo "<br>";
+?>
                 </td>
                 
                
