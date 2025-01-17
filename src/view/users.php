@@ -93,7 +93,7 @@ $users = UsersController::getAllUsers();
                 </li>
                
                 <li>
-                    <a href="sign_up.php">
+                    <a href="../../pages/logout.php">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>

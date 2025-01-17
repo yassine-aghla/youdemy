@@ -1,5 +1,5 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use App\Controller\UsersController;
 ?>
@@ -103,7 +103,7 @@ use App\Controller\UsersController;
     </form>
     <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__.'/../Controller/UsersController.php';
+    require_once __DIR__.'/../src/Controller/UsersController.php';
     $response = UsersController::signup($_POST);
     echo $response;
 }

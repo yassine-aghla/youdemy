@@ -1,5 +1,5 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use App\Controller\UsersController;
  
@@ -93,13 +93,11 @@ use App\Controller\UsersController;
     </form>
     <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__.'/../Controller/UsersController.php';
+    require_once __DIR__.'/../src/Controller/UsersController.php';
     $isLoggedIn = UsersController::login($_POST['email'], $_POST['password']);
     if ($isLoggedIn) {
-        // session_start();
-    header("Location:dashboard.php");
-       
-        exit;
+        header("Location:../src/view/dashboard.php");
+         exit;
     } else {
         echo "Invalid credentials!";
     }
