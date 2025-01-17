@@ -8,8 +8,11 @@
 //     header("Location: login.php");
 //     exit();
 // }
+require_once '../../vendor/autoload.php';
 session_start();
 $role =$_SESSION['user']['role'];
+require_once __DIR__.'/../controller/tags.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -150,7 +153,7 @@ $role =$_SESSION['user']['role'];
 
                 <div class="card">
                     <div>
-                        <div class="numbers">0</div>
+                        <div class="numbers"><?php echo $tagsCount ?></div>
                         <div class="cardName">Tags</div>
                     </div>
 

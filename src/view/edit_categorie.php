@@ -2,6 +2,8 @@
 require_once '../../vendor/autoload.php';
 require __DIR__.'/../controller/categoriesController.php';
 use App\Model\category;
+session_start();
+$role = $_SESSION['user']['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +79,7 @@ if (isset($_GET['id'])) {
                         <span class="title"></span>
                     </a>
                 </li>
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -87,15 +89,17 @@ if (isset($_GET['id'])) {
                     </a>
                 </li>
                 <li>
-                    <a href="Articles.php">
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>v
+                    <a href="course.php">
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">Articles</span>
+                        <span class="title">courses</span>
                     </a>
                 </li>
-                
-               
+                <?php endif; ?>
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -121,7 +125,7 @@ if (isset($_GET['id'])) {
                         <span class="title">user</span>
                     </a>
                 </li>
-              
+                <?php endif; ?>
                 <li>
                     <a href="sign_up.php">
                         <span class="icon">

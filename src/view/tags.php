@@ -1,6 +1,8 @@
 <?php
 require_once '../../vendor/autoload.php';
 require_once __DIR__.'/../controller/tags.php';
+session_start();
+$role = $_SESSION['user']['role'];
 // use App\Controller\tags;
 ?>
 <!DOCTYPE html>
@@ -135,7 +137,7 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title"></span>
                     </a>
                 </li>
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -144,6 +146,8 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
@@ -152,7 +156,9 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title">Courses</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 <li>
+                <?php if ($role==='Admin'): ?>
                     <a href="categories.php">
                         <span class="icon">
                            <ion-icon name="grid-outline"></ion-icon>
@@ -184,6 +190,7 @@ require_once __DIR__.'/../controller/tags.php';
                         <span class="title">user</span>
                     </a>
                 </li>
+                <?php endif; ?>
             
                 <li>
                     <a href="../../pages/logout.php">

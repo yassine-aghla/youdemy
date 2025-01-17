@@ -2,6 +2,8 @@
 require_once '../../vendor/autoload.php';
 require __DIR__.'/../controller/tags.php';
 use App\Model\Tag;
+session_start();
+$role = $_SESSION['user']['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +79,7 @@ if (isset($_GET['id'])) {
                         <span class="title"></span>
                     </a>
                 </li>
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -86,7 +88,8 @@ if (isset($_GET['id'])) {
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
@@ -95,8 +98,8 @@ if (isset($_GET['id'])) {
                         <span class="title">Articles</span>
                     </a>
                 </li>
-              
-               
+                <?php endif; ?>
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -122,7 +125,7 @@ if (isset($_GET['id'])) {
                         <span class="title">user</span>
                     </a>
                 </li>
-             
+                <?php endif; ?>
                 <li>
                     <a href="sign_up.php">
                         <span class="icon">

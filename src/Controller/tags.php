@@ -32,11 +32,16 @@ class tags extends Tag{
         $tags = $this->getAllTags();
         return $tags;
     }
+
+    public function getCountTags(){
+        $tagsCount=$this->countTags();
+     return  $tagsCount;
+    }
 }
 
-// tags::addTag();
-// $tags =tags::displayTags();
+
 
 $tag=new tags();
 $tag->addTag();
 $tags=$tag->displayTags();
+$tagsCount=$tag->getCountTags();

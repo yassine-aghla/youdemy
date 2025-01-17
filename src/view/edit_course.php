@@ -16,7 +16,8 @@ $tag = new tags();
 $tags = $tag->displayTags();
 $categorie = new CategoriesController();
 $categories = $categorie->displayCategories();
-
+session_start();
+$role = $_SESSION['user']['role'];
 // Connexion à la base de données
 $pdo = Database::getConnection();
 
@@ -121,7 +122,7 @@ if (!$course) {
                         <span class="title"></span>
                     </a>
                 </li>
-           
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -130,8 +131,8 @@ if (!$course) {
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                
-
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
@@ -140,7 +141,8 @@ if (!$course) {
                         <span class="title">Articles</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -166,7 +168,7 @@ if (!$course) {
                         <span class="title">Auteur</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
                 <li>
                     <a href="sign_up.php">
                         <span class="icon">

@@ -3,6 +3,8 @@ require_once '../../vendor/autoload.php';
 require_once __DIR__ . '/../Controller/CourseController.php';
 use App\Controller\UsersController;
 $users = UsersController::getAllUsers();
+session_start();
+$role = $_SESSION['user']['role'];
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +41,7 @@ $users = UsersController::getAllUsers();
                         <span class="title"></span>
                     </a>
                 </li>
-
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -48,8 +50,8 @@ $users = UsersController::getAllUsers();
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-              
-
+                <?php endif; ?>
+                <?php if ($role ==='Enseignant'): ?>
                 <li>
                     <a href="course.php">
                         <span class="icon">
@@ -58,7 +60,8 @@ $users = UsersController::getAllUsers();
                         <span class="title">courses</span>
                     </a>
                 </li>
-                
+                <?php endif; ?>
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="categories.php">
                         <span class="icon">
@@ -91,7 +94,7 @@ $users = UsersController::getAllUsers();
                         <span class="title">user</span>
                     </a>
                 </li>
-               
+                <?php endif; ?>
                 <li>
                     <a href="../../pages/logout.php">
                         <span class="icon">
