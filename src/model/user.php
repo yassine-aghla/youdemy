@@ -1,47 +1,51 @@
 <?php
-
 namespace App\Model;
 
 use App\Config\Database;
 use PDO;
-class User {
-    private static $table = 'users';
 
-    public static function createUser($data) {
-        $conn = Database::getConnection();
-        $query = "INSERT INTO " . self::$table . " (username, email, password,role) 
-                  VALUES (:username, :email, :password, :role)";
-        $stmt = $conn->prepare($query); 
-        return $stmt->execute([
-            ':username' => $data['username'],
-            ':email' => $data['email'],
-            ':password' => $data['password'],
-            ':role' => $data['role'],
+abstract class User {
+    protected $username;
+    protected $email;
+    protected $password;
+    protected $role;
 
-            
-        ]);
+    public function __construct($username, $email, $password, $role) {
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+        $this->role = $role;
     }
-      public static function findUserByEmail($email) {
+
+    
+    abstract public function signup();
+
+  
+    public static function login($email, $password) {
         $conn = Database::getConnection();
-        $query = "SELECT * FROM " . self::$table . " WHERE email = :email";
+        $query = "SELECT * FROM users WHERE email = :email";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user'] = [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'role' => $user['role'],
+            ];
+            return true;
+        }
+        return false;
     }
-    public static function getAllUsers() {
+    public static function getAllUsers(){
         $conn = Database::getConnection();
-        $query = "SELECT * FROM " . self::$table;
+        $query = "SELECT * FROM users  WHERE is_active = true ";
         $stmt = $conn->prepare($query);
         $stmt->execute();
-    
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public static function banUser($userId) {
-        $conn = Database::getConnection();
-        $query = "DELETE FROM " . self::$table . " WHERE id = :id";
-        $stmt = $conn->prepare($query);
-        return $stmt->execute([':id' => $userId]);
     }
 }

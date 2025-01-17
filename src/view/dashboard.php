@@ -12,7 +12,7 @@ require_once '../../vendor/autoload.php';
 session_start();
 $role =$_SESSION['user']['role'];
 require_once __DIR__.'/../controller/tags.php';
-
+require_once __DIR__.'/../controller/categoriesController.php';
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +164,7 @@ require_once __DIR__.'/../controller/tags.php';
 
                 <div class="card">
                     <div>
-                        <div class="numbers">0</div>
+                        <div class="numbers"><?php echo $countcategorie ?></div>
                         <div class="cardName">Categories</div>
                     </div>
 

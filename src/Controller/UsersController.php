@@ -1,48 +1,32 @@
 <?php
 namespace App\Controller;
-
 use App\Model\User;
+use App\Model\Student;
+use App\Model\Teacher;
 
 class UsersController {
+   
+
     public static function signup($data) {
-        var_dump($data);
-        if (!in_array($data['role'], ['Etudiant', 'Admin', 'Enseignant'])) {
+        $role = $data['role'];
+
+        if ($role === 'Etudiant') {
+            $user = new Student($data['username'], $data['email'], $data['password'], $role);
+        } elseif ($role === 'Enseignant') {
+            $user = new Teacher($data['username'], $data['email'], $data['password'], $role);
+        } else {
             return "Invalid role!";
         }
 
-        $existingUser = User::findUserByEmail($data['email']);
-        if ($existingUser) {
-            return "Email already exists!";
-        }
-
-        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
-        // unset($data['password']);
-
-        return User::createUser($data) ? "User created successfully!" : "Error creating user.";
+        return $user->signup() ? "User created successfully!" : "Error creating user.";
     }
-
 
     public static function login($email, $password) {
-        $user = User::findUserByEmail($email);
-        echo "<pre>";
-        // var_dump($user);
-        echo "</pre>";
-        if ($user && password_verify($password, $user['password'])) {
-            // session_start();
-
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'username' => $user['username'],
-                'role'=>$user['role'],
-                
-            ];
-            // $_SESSION['user'] = $user;
-            
-            return true;
-        }
-        return false;
+        return User::login($email, $password);
     }
-    public static function getAllUsers() {
+
+    public static function getUsers() {
         return User::getAllUsers();
     }
+
 }

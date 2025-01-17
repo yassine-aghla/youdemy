@@ -1,8 +1,9 @@
 <?php
 require_once '../../vendor/autoload.php';
 require_once __DIR__ . '/../Controller/CourseController.php';
-use App\Controller\UsersController;
-$users = UsersController::getAllUsers();
+ use App\Controller\UsersController;
+ $users = UsersController::getUsers();
+
 session_start();
 $role = $_SESSION['user']['role'];
 ?>
@@ -137,19 +138,33 @@ $role = $_SESSION['user']['role'];
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user): ?>
+            <?php 
+            
+            foreach ($users as $user): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($user['id']); ?></td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
                     <td><?php echo htmlspecialchars($user['email']); ?></td>
                     <td><?php echo htmlspecialchars($user['role']); ?></td>
                     <td>
-                        
-                <form method="POST" action="user_actions.php" style="display:inline;">
-                    <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                    <input type="hidden" name="action" value="ban">
-                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?')">Bannir</button>
-                </form>
+                    <!-- Supprimer -->
+                    <form action="..\controller\delete_user.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                        <button type="submit">Supprimer</button>
+                    </form>
+
+                    <!-- Banner -->
+                    <form action="ban_user.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                        <button type="submit">Banner</button>
+                    </form>
+
+                    <!-- Activer -->
+                    <form action="activate_user.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                        <button type="submit">Activer</button>
+                    </form>
+                </td>
                 
                
                 </tr>
