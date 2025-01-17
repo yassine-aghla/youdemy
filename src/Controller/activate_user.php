@@ -8,12 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id = $_POST['id'];
         
         $conn = Database::getConnection();
-        $query = "UPDATE users SET is_active = 1 WHERE id = :id";  // Mise à jour pour réactiver
+        $query = "UPDATE users SET is_active = 1 WHERE id = :id";  
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $id);
         
         if ($stmt->execute()) {
-            // Redirection après réactivation pour éviter la soumission multiple
+           
             header("Location: ../view/users.php"); 
             exit;
         } else {

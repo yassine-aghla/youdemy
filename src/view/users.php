@@ -17,17 +17,78 @@ $role = $_SESSION['user']['role'];
     <title>Liste des utilisateurs</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
+     
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color:#2a2185;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+button {
+    background-color: #007bff;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+button i {
+    font-size: 18px; 
+}
+
+
+button.delete {
+    background-color: #dc3545;
+}
+
+button.delete:hover {
+    background-color: #c82333;
+}
+
+button.ban {
+    background-color: #f0ad4e;
+}
+
+button.ban:hover {
+    background-color: #ec971f;
+}
+
+button.activate {
+    background-color: #28a745;
+}
+
+button.activate:hover {
+    background-color: #218838;
+}
+
     </style>
 </head>
 <body>
@@ -156,13 +217,15 @@ $role = $_SESSION['user']['role'];
                     <!-- Supprimer -->
                     <form action="..\controller\delete_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                        <button type="submit">Supprimer</button>
+                        <button type="submit" class="delete"><i class="fas fa-trash"></i>
+                        Supprimer</button>
                     </form>
 
                     <!-- Banner -->
                     <form action="..\controller\ban_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                        <button type="submit">Banner</button>
+                        <button type="submit" class="ban"><i class="fas fa-pause">
+                            Banner</button>
                     </form>
 
                     <!-- Activer -->
@@ -171,7 +234,8 @@ $role = $_SESSION['user']['role'];
     if ($user['is_active'] == 0) {
         echo "<form action='..\controller\activate_user.php' method='POST' style='display:inline;'>
                   <input type='hidden' name='id' value='" . $user['id'] . "'>
-                  <button type='submit'>Réactiver</button>
+                  <button type='submit'class='activate'>
+                  <i class='fas fa-arrow-right'>Réactiver</button>
               </form>";
     }
     echo "<br>";
@@ -188,6 +252,7 @@ $role = $_SESSION['user']['role'];
 
    <!-- ====== ionicons ======= -->
    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
