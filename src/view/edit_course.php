@@ -119,7 +119,7 @@ if (!$course) {
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"></span>
+                        <span class="title"><?php echo $_SESSION['user']['username'];?></span>
                     </a>
                 </li>
                 <?php if ($role==='Admin'): ?>
@@ -151,7 +151,14 @@ if (!$course) {
                         <span class="title">Categorie</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="manage_course.php">
+                        <span class="icon">
+                           <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">manage courses</span>
+                    </a>
+                </li>
                 <li>
                     <a href="tags.php">
                         <span class="icon">

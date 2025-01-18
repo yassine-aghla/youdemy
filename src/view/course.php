@@ -349,6 +349,7 @@ a[href^="delete_article.php"]:hover {
                 <th>Title</th>
                 <th>content</th>
                 <th>categorie</th>
+                <th>Teacher</th>
                 <th>Tags</th>
                 <th>Video Path</th>
                 <th>created at</th>
@@ -360,7 +361,7 @@ a[href^="delete_article.php"]:hover {
         <?php 
         
       
-        $courses = VideoCourse::displayCourses($pdo,$teacherId);
+        $courses = VideoCourse::displayCourses($pdo,$teacherId,null, null, true);
                     // var_dump($courses);
             foreach($courses as $course) :
         ?>
@@ -369,6 +370,7 @@ a[href^="delete_article.php"]:hover {
             <td><?= $course['title'];  ?></td>
             <td><?= $course['contenu'];  ?></td>
             <td><?= $course['category_name'];  ?></td>
+            <td><?= $course['teacher_name'];  ?></td>
             <td><?= $course['tags'];  ?></td>
             <td><?= $course['video_path'];  ?></td>
             <td><?= $course['created_at'];  ?></td>
@@ -396,6 +398,7 @@ a[href^="delete_article.php"]:hover {
                 <th>Title</th>
                 <th>content</th>
                 <th>Categorie</th>
+                <th>Teacher</th>
                 <th>Tags</th>
                 <th>Document Path</th>
                 <th>created at</th>
@@ -405,7 +408,7 @@ a[href^="delete_article.php"]:hover {
         <tbody>
                     
         <?php 
-        $courses = DocumentCourse::displayCourses($pdo,$teacherId);
+        $courses = DocumentCourse::displayCourses($pdo,$teacherId,null, null, true);
                     // var_dump($courses);
             foreach($courses as $course) :
         ?>
@@ -414,6 +417,7 @@ a[href^="delete_article.php"]:hover {
             <td><?= $course['title'];  ?></td>
             <td><?= $course['contenu'];  ?></td>
             <td><?= $course['category_name'];  ?></td>
+            <td><?= $course['teacher_name'];  ?></td>
             <td><?= $course['tags'];  ?></td>
             <td><?= $course['document_path'];  ?></td>
             <td><?= $course['created_at'];  ?></td>

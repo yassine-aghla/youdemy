@@ -46,19 +46,24 @@ class VideoCourse extends Course
         }
     }
 
-    public static function displayCourses($pdo, $teacherId = null)
+    public static function displayCourses($pdo, $teacherId = null,$page = 1, $limit=4,$noLimit = false)
     {
+        $offset = ($page - 1) * $limit;
         $query = "
             SELECT 
                 courses.id, 
                 courses.title, 
-                courses.contenu, 
+                courses.contenu,
+                courses.status, 
                 c.name AS category_name, 
+                 users.username AS teacher_name,
                 GROUP_CONCAT(tags.name ORDER BY tags.name ASC) AS tags, 
                 courses.video_path, 
                 courses.created_at 
             FROM 
                 courses
+                  INNER JOIN 
+                users ON courses. teacher_id = users.id
             LEFT JOIN 
                 categories c ON c.id = courses.category_id
             LEFT JOIN 
@@ -76,6 +81,9 @@ class VideoCourse extends Course
         }
     
         $query .= " GROUP BY courses.id, c.id";
+        if (!$noLimit) {
+            $query .= " LIMIT :limit OFFSET :offset";
+        }
     
         $stmt = $pdo->prepare($query);
     
@@ -83,7 +91,11 @@ class VideoCourse extends Course
         if ($teacherId !== null) {
             $stmt->bindParam(':teacher_id', $teacherId);
         }
-    
+
+        if (!$noLimit) {
+        $stmt->bindParam(':limit', $limit);
+        $stmt->bindParam(':offset', $offset);
+    }
         $stmt->execute();
         $result = $stmt->fetchAll();
     

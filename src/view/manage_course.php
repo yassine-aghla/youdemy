@@ -1,20 +1,15 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
-//     header('Location:../../public/index.php');
-//     exit();
-// }
-// if (!isset($_SESSION['user'])) {
-//     header("Location: login.php");
-//     exit();
-// }
 require_once '../../vendor/autoload.php';
-session_start();
-$role =$_SESSION['user']['role'];
-require_once __DIR__.'/../controller/tags.php';
-require_once __DIR__.'/../controller/categoriesController.php';
+require_once __DIR__ . '/../Controller/CourseController.php';
+use App\Model\VideoCourse;
+use App\Model\DocumentCourse;
+// session_start();
+$role = $_SESSION['user']['role'];
+$courses = array_merge(
+    VideoCourse::displayCourses($pdo),
+    DocumentCourse::displayCourses($pdo)
+);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +21,55 @@ require_once __DIR__.'/../controller/categoriesController.php';
     <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+thead th {
+    background-color:#2a2185;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+td, th {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+td:last-child {
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between; 
+    gap: 10px; 
+}
+        </style>
 </head>
 
 <body>
@@ -37,9 +81,9 @@ require_once __DIR__.'/../controller/categoriesController.php';
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
-                            <ion-icon name="person-circle-outline"><?php echo $_SESSION['user']['username'];?></ion-icon>
+                            <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"></span>
+                        <span class="title"><?php echo $_SESSION['user']['username'];?></span>
                     </a>
                 </li>
                 <?php if ($role==='Admin'): ?>
@@ -127,59 +171,49 @@ require_once __DIR__.'/../controller/categoriesController.php';
                 </div>
             </div>
 
-            <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">0</div>
-                        <div class="cardName">Cours</div>
-                    </div>
+            <!-- ======================= manage course ================== -->
+            <h1>Liste des Cours</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Enseignant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($courses)): ?>
+            <?php foreach ($courses as $course): ?>
+                <tr>
+                    <td><?= htmlspecialchars($course['id']) ?></td>
+                    <td><?= htmlspecialchars($course['title']) ?></td>
+                    <td><?= htmlspecialchars($course['contenu']) ?></td>
+                    <td>
+                        <form method="POST" action="update_course_status.php">
+                            <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
+                            <select name="status">
+                                <option value="draft" <?= $course['status'] === 'draft' ? 'selected' : '' ?>>Brouillon</option>
+                                <option value="published" <?= $course['status'] === 'published' ? 'selected' : '' ?>>Publié</option>
+                                <option value="scheduled" <?= $course['status'] === 'scheduled' ? 'selected' : '' ?>>Programmé</option>
+                            </select>
+                            <button type="submit">Modifier le statut</button>
+                        </form>
+                    </td>
+                    <td><?= htmlspecialchars($course['teacher_name']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5">Aucun cours trouvé.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
 
-                    <div class="iconBx">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                    </div>
-                </div>
 
-                <div class="card">
-                    <div>
-                        <div class="numbers">0</div>
-                        <div class="cardName">Users</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="person-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"><?php echo $tagsCount ?></div>
-                        <div class="cardName">Tags</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="pricetag-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"><?php echo $countcategorie ?></div>
-                        <div class="cardName">Categories</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="grid-outline"></ion-icon>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================ Add Charts JS ================= -->
-            <div class="chartsBx">
-                <div class="chart"><canvas id="chart-1"></canvas> </div>
-                <div class="chart"> <canvas id="chart-2"></canvas> </div>
-            </div>
+          
 
 
 

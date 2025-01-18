@@ -133,7 +133,7 @@ button.activate:hover {
                     </a>
                 </li>
                 <li>
-                    <a href="courseDash.php">
+                    <a href="manage_course.php">
                         <span class="icon">
                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>

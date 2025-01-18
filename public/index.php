@@ -1,3 +1,24 @@
+<?php
+require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../src/Controller/CourseController.php';
+// use App\Config\Database;
+use App\Model\VideoCourse;
+use App\Model\DocumentCourse;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 4;
+$videoCourses = VideoCourse::displayCourses($pdo,null,$page, $limit);
+$documentCourses = DocumentCourse::displayCourses($pdo,null,$page, $limit);
+$totalCoursesQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NULL AND document_path IS NOT NULL";
+$stmt = $pdo->query($totalCoursesQuery);
+$totalCourses = $stmt->fetchColumn();
+$totalPages = ceil($totalCourses / $limit);
+$totalCoursesVideoQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NOT NULL AND document_path IS NULL";
+$stmt = $pdo->query($totalCoursesVideoQuery);
+$totalCoursesVideo = $stmt->fetchColumn();
+$totalPagesVideo = ceil($totalCoursesVideo  / $limit);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +26,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Youdemy Platform</title>
   <link rel="stylesheet" href="../assets/css/index.css">
+  <style>
+     .pagination {
+    display: flex;
+    justify-content: center; /* Centrer les liens */
+    align-items: center;
+    margin-top: 20px;
+    
+    
+}
+
+.pagination a {
+    margin: 0 5px; 
+    padding: 10px 15px; 
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    transition: background-color 0.3s ease; 
+}
+
+.pagination a:hover {
+    background-color: #0056b3; 
+}
+
+.pagination a:active {
+    background-color: #004085; 
+}
+
+.pagination a.disabled {
+    background-color: #ddd; 
+    color: #999;
+    cursor: not-allowed; 
+}
+
+.pagination .current-page {
+    
+    color: #fff; 
+    cursor: default; 
+}
+
+.pagination a:first-child {
+    margin-left: 0; 
+}
+
+.pagination a:last-child {
+    margin-right: 0; 
+}
+
+    </style>
 </head>
 <body>
   <!-- Header Section -->
@@ -26,30 +97,52 @@
     <h2>Welcome to Youdemy!</h2>
     <p>Explore our platform and unlock your learning potential.</p>
   </main>
-
   <section class="courses-section">
-  <h2>Our Courses</h2>
-  <div class="courses-container">
-    <div class="course-card">
-      <img src="https://via.placeholder.com/300x200" alt="Course Image">
-      <h3>Web Development</h3>
-      <p>Learn to build responsive websites with HTML, CSS, and JavaScript.</p>
-      <button>View Course</button>
+    <h2>Video Courses</h2>
+    <div class="courses-container">
+        <?php foreach ($videoCourses as $course): ?>
+            <div class="course-card">
+                <iframe src="<?= htmlspecialchars($course['video_path']) ?>" width="300" height="200" frameborder="0" allowfullscreen></iframe>
+                <h3><?= htmlspecialchars($course['title']) ?></h3>
+                <p><?= htmlspecialchars($course['contenu']) ?></p>
+                <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
+                <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
+                <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
+            </div>
+        <?php endforeach; ?>
     </div>
- <div class="course-card">
-      <img src="https://via.placeholder.com/300x200" alt="Course Image">
-      <h3>Data Science</h3>
-      <p>Master data analysis and visualization using Python.</p>
-      <button>View Course</button>
-    </div>
-    <div class="course-card">
-      <img src="https://via.placeholder.com/300x200" alt="Course Image">
-      <h3>Graphic Design</h3>
-      <p>Unleash your creativity with tools like Photoshop and Illustrator.</p>
-      <button>View Course</button>
-    </div>
-  </div>
+    <div class="pagination">
+    <?php
+    for ($i = 1; $i <= $totalPagesVideo; $i++) {
+        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+    }
+    ?>
+</div>
+
+    <h2>Document Courses</h2>
+    <div class="courses-container">
+        <?php foreach ($documentCourses as $course): ?>
+            <div class="course-card">
+                <img src="https://via.placeholder.com/300x200" alt="Document Icon">
+                <h3><?= htmlspecialchars($course['title']) ?></h3>
+                <p><?= htmlspecialchars($course['contenu']) ?></p>
+                <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
+                <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
+                <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
+                <a href="<?= htmlspecialchars($course['document_path']) ?>" target="_blank">View Document</a>
+            </div>
+        <?php endforeach; ?>
+        </div>
+        <div class="pagination">
+    <?php
+    for ($i = 1; $i <= $totalPages; $i++) {
+        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+    }
+    ?>
+</div>
+          
 </section>
+
 
 <footer>
   <div class="footer-container">
