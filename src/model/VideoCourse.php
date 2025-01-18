@@ -70,7 +70,7 @@ class VideoCourse extends Course
                 AND courses.video_path IS NOT NULL
         ";
     
-        // Ajouter une condition pour le teacher_id si elle est fournie
+      
         if ($teacherId !== null) {
             $query .= " AND courses.teacher_id = :teacher_id";
         }
@@ -79,7 +79,7 @@ class VideoCourse extends Course
     
         $stmt = $pdo->prepare($query);
     
-        // Lier le paramètre teacher_id s'il est fourni
+       
         if ($teacherId !== null) {
             $stmt->bindParam(':teacher_id', $teacherId);
         }

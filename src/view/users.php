@@ -4,7 +4,7 @@ require_once __DIR__ . '/../Controller/CourseController.php';
  use App\Controller\UsersController;
  $users = UsersController::getUsers();
 
-session_start();
+// session_start();
 $role = $_SESSION['user']['role'];
 ?>
 
@@ -100,7 +100,7 @@ button.activate:hover {
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"></span>
+                        <span class="title"><?php echo $_SESSION['user']['username'];?></span>
                     </a>
                 </li>
                 <?php if ($role==='Admin'): ?>

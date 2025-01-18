@@ -30,6 +30,13 @@ abstract class User {
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if ($user) {
+            if ($user['is_active'] == 0) {
+                echo "Votre compte est banni. Contactez l'administrateur pour plus d'informations.";
+                exit;
+            }
+        }
+
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user'] = [
                 'id' => $user['id'],

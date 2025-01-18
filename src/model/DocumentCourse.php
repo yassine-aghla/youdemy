@@ -73,7 +73,7 @@ public static function displayCourses($pdo, $teacherId = null)
             AND courses.document_path IS NOT NULL
     ";
 
-    // Ajouter une condition pour le teacher_id si elle est fournie
+    
     if ($teacherId !== null) {
         $query .= " AND courses.teacher_id = :teacher_id";
     }
@@ -82,7 +82,7 @@ public static function displayCourses($pdo, $teacherId = null)
 
     $stmt = $pdo->prepare($query);
 
-    // Lier le paramètre teacher_id s'il est fourni
+
     if ($teacherId !== null) {
         $stmt->bindParam(':teacher_id', $teacherId);
     }
