@@ -9,6 +9,7 @@ abstract class User {
     protected $email;
     protected $password;
     protected $role;
+    
 
     public function __construct($username, $email, $password, $role) {
         $this->username = $username;
@@ -31,10 +32,14 @@ abstract class User {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            if ($user['is_active'] == 0) {
+            if ($user['is_active'] == 0 && $user['role'] !== 'Enseignant' ) {
                 echo "Votre compte est banni. Contactez l'administrateur pour plus d'informations.";
                 exit;
             }
+        }
+        if ($user['role'] === 'Enseignant' && $user['is_active'] == false) {
+            echo "Votre compte est en attente de validation. Veuillez contacter l'administrateur.";
+            exit;
         }
 
         if ($user && password_verify($password, $user['password'])) {
@@ -54,5 +59,11 @@ abstract class User {
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function activateUser($userId) {
+        $conn = Database::getConnection();
+        $query = "UPDATE users SET is_active = true WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        return $stmt->execute([':id' => $userId]);
     }
 }
