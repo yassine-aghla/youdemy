@@ -46,4 +46,5 @@ $categorie=new CategoriesController();
 $categorie->handleRequest();
 $categories=$categorie->displayCategories();
 $countcategorie=$categorie-> getCategoryCount();
+
 ?>

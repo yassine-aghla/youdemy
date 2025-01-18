@@ -28,4 +28,13 @@ abstract class Course
     abstract public function save($pdo);
 
     abstract static public function displayCourses($pdo,$teacher_id);
+    
+    public static function countCourses($pdo)
+    {
+        $query = "SELECT COUNT(*) as total FROM courses";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
 }

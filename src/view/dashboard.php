@@ -9,10 +9,14 @@
 //     exit();
 // }
 require_once '../../vendor/autoload.php';
+use App\Model\Course;  
+use App\Config\Database;
+$pdo = Database::getConnection();
 session_start();
 $role =$_SESSION['user']['role'];
 require_once __DIR__.'/../controller/tags.php';
 require_once __DIR__.'/../controller/categoriesController.php';
+$totalCourses = Course::countCourses($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +41,9 @@ require_once __DIR__.'/../controller/categoriesController.php';
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
-                            <ion-icon name="person-circle-outline"><?php echo $_SESSION['user']['username'];?></ion-icon>
+                            <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"></span>
+                        <span class="title"><?php echo $_SESSION['user']['username'];?></span>
                     </a>
                 </li>
                 <?php if ($role==='Admin'): ?>
@@ -131,7 +135,7 @@ require_once __DIR__.'/../controller/categoriesController.php';
             <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">0</div>
+                        <div class="numbers"><?php echo $totalCourses ?></div>
                         <div class="cardName">Cours</div>
                     </div>
 
