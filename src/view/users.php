@@ -217,14 +217,14 @@ button.activate:hover {
                     <!-- Supprimer -->
                     <form action="..\controller\delete_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                        <button type="submit" class="delete"><i class="fas fa-trash"></i>
+                        <button type="submit" class="delete"></i>
                         Supprimer</button>
                     </form>
 
                     <!-- Banner -->
                     <form action="..\controller\ban_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                        <button type="submit" class="ban"><i class="fas fa-pause">
+                        <button type="submit" class="ban">
                             Banner</button>
                     </form>
 
@@ -235,7 +235,7 @@ button.activate:hover {
         echo "<form action='..\controller\activate_user.php' method='POST' style='display:inline;'>
                   <input type='hidden' name='id' value='" . $user['id'] . "'>
                   <button type='submit'class='activate'>
-                  <i class='fas fa-arrow-right'>Réactiver</button>
+                  Réactiver</button>
               </form>";
     }
     echo "<br>";
@@ -252,7 +252,6 @@ button.activate:hover {
 
    <!-- ====== ionicons ======= -->
    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

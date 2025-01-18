@@ -6,7 +6,7 @@ use App\Controller\CategoriesController;
 use App\Config\Database;
 use App\Model\VideoCourse;
 use App\Model\DocumentCourse;
-session_start();
+// session_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location:index.php');
@@ -25,6 +25,8 @@ $tag=new tags();
 $tags=$tag->displayTags();
 $categorie=new CategoriesController();
 $categories=$categorie->displayCategories();
+$teacherId = $_SESSION['user']['id']; 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -189,15 +191,15 @@ a[href^="delete_article.php"]:hover {
         <div class="navigation">
             <ul>
                 <li>
-                <?php if ($role==='Admin'): ?>
-                    <a href="dashboard.php">
+              
+                    <a href="">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title"></span>
+                        <span class="title"><?php echo $_SESSION['user']['username'];?></span>
                     </a>
                 </li>
-           
+                <?php if ($role==='Admin'): ?>
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -356,7 +358,9 @@ a[href^="delete_article.php"]:hover {
         <tbody>
                     
         <?php 
-        $courses = VideoCourse::displayCourses($pdo);
+        
+      
+        $courses = VideoCourse::displayCourses($pdo,$teacherId);
                     // var_dump($courses);
             foreach($courses as $course) :
         ?>
@@ -401,7 +405,7 @@ a[href^="delete_article.php"]:hover {
         <tbody>
                     
         <?php 
-        $courses = DocumentCourse::displayCourses($pdo);
+        $courses = DocumentCourse::displayCourses($pdo,$teacherId);
                     // var_dump($courses);
             foreach($courses as $course) :
         ?>

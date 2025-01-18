@@ -16,7 +16,7 @@ $tag = new tags();
 $tags = $tag->displayTags();
 $categorie = new CategoriesController();
 $categories = $categorie->displayCategories();
-session_start();
+// session_start();
 $role = $_SESSION['user']['role'];
 // Connexion à la base de données
 $pdo = Database::getConnection();
