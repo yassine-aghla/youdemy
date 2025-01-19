@@ -1,6 +1,6 @@
 <?php
 require_once '../../vendor/autoload.php'; 
-use App\Model\User;
+use App\Model\Student;
 
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Etudiant') {
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Etudiant') {
 }
 
 $studentId = $_SESSION['user']['id'];
-$enrolledCourses = User::getEnrolledCourses($studentId);
+$enrolledCourses = Student::getEnrolledCourses($studentId);
 ?>
 <!DOCTYPE html>
 <html lang="en">

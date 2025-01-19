@@ -4,6 +4,14 @@ require_once '../../vendor/autoload.php';
 use App\Model\User;
 
 session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role =$_SESSION['user']['role'];
 $pendingTeachers = array_filter(User::getAllUsers(), function($user) {
     return $user['role'] === 'Enseignant' && $user['is_active'] == false;
@@ -150,6 +158,14 @@ td:last-child {
                     </a>
                 </li>
                 <li>
+                    <a href="manage_teacher.php">
+                        <span class="icon">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">manage teacher</span>
+                    </a>
+                </li>
+                <li>
                     <a href="tags.php">
                         <span class="icon">
                             <ion-icon name="pricetag-outline"></ion-icon>
@@ -223,3 +239,9 @@ td:last-child {
             <?php endif; ?>
     </tbody>
 </table>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+   <script src="assets/js/chartsJS.js"></script>
+
+   <!-- ====== ionicons ======= -->
+   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

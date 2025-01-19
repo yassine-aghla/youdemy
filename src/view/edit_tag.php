@@ -3,6 +3,14 @@ require_once '../../vendor/autoload.php';
 require __DIR__.'/../controller/tags.php';
 use App\Model\Tag;
 session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role = $_SESSION['user']['role'];
 ?>
 <!DOCTYPE html>

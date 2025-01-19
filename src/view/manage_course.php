@@ -4,6 +4,14 @@ require_once __DIR__ . '/../Controller/CourseController.php';
 use App\Model\VideoCourse;
 use App\Model\DocumentCourse;
 // session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role = $_SESSION['user']['role'];
 $courses = array_merge(
     VideoCourse::displayCourses($pdo,null,null, null, true),
@@ -270,7 +278,7 @@ td[colspan="5"] {
                             <select name="status">
                                 <option value="draft" <?= $course['status'] === 'draft' ? 'selected' : '' ?>>Brouillon</option>
                                 <option value="published" <?= $course['status'] === 'published' ? 'selected' : '' ?>>Publié</option>
-                                <option value="scheduled" <?= $course['status'] === 'scheduled' ? 'selected' : '' ?>>Programmé</option>
+                               
                             </select>
                             <button type="submit">Modifier le statut</button>
                         </form>

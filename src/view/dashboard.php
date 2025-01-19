@@ -10,15 +10,24 @@
 // }
 require_once '../../vendor/autoload.php';
 use App\Model\Course; 
-
+use App\Model\Admin;  
 use App\Config\Database;
 $pdo = Database::getConnection();
 session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role =$_SESSION['user']['role'];
 require_once __DIR__.'/../controller/tags.php';
 require_once __DIR__.'/../controller/categoriesController.php';
 $totalCourses = Course::countCourses($pdo);
-
+$stats = Admin::getAdminStats();
+$categoriesStats = Admin::getCoursesByCategory();
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +41,42 @@ $totalCourses = Course::countCourses($pdo);
     <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        .admin-stats-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.admin-stats-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.admin-stats-container h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #2a2185;
+}
+
+.admin-stats-container p, .admin-stats-container li {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.admin-stats-container ol {
+    padding-left: 20px;
+}
+
+
+    </style>
 </head>
 
 <body>
@@ -190,10 +235,35 @@ $totalCourses = Course::countCourses($pdo);
             </div>
 
             <!-- ================ Add Charts JS ================= -->
-            <div class="chartsBx">
-                <div class="chart"><canvas id="chart-1"></canvas> </div>
-                <div class="chart"> <canvas id="chart-2"></canvas> </div>
-            </div>
+            <div class="admin-stats-container">
+    <h2>Statistiques Globales</h2>
+    
+    <div class="top-course">
+        <h3>Cours avec le plus d'étudiants :</h3>
+        <p><strong><?= htmlspecialchars($stats['top_course']['title']) ?></strong> 
+        avec <?= $stats['top_course']['total_students'] ?> étudiants inscrits.</p>
+    </div>
+    
+    <div class="top-teachers">
+        <h3>Top 3 Enseignants :</h3>
+        <ol>
+            <?php foreach ($stats['top_teachers'] as $teacher): ?>
+                <li>
+                    <strong><?= htmlspecialchars($teacher['teacher_name']) ?></strong> 
+                    - <?= $teacher['total_students'] ?> étudiants inscrits.
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        </div>
+            <h3>Répartition des cours par catégorie :</h3>
+                 <ul>
+                  <?php foreach ($categoriesStats as $category): ?>
+            <li>
+            <?= htmlspecialchars($category['category_name']) ?> : <?= $category['total_courses'] ?> cours
+             </li>
+                 <?php endforeach; ?>
+</ul>
+</div>
 
 
 

@@ -17,6 +17,14 @@ $tags = $tag->displayTags();
 $categorie = new CategoriesController();
 $categories = $categorie->displayCategories();
 // session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role = $_SESSION['user']['role'];
 // Connexion à la base de données
 $pdo = Database::getConnection();
@@ -138,7 +146,7 @@ if (!$course) {
                         <span class="icon">
                         <ion-icon name="document-text-outline"></ion-icon>
                         </span>
-                        <span class="title">Articles</span>
+                        <span class="title">courses</span>
                     </a>
                 </li>
                 <?php endif; ?>
@@ -180,7 +188,7 @@ if (!$course) {
                         <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>
                         </span>
-                        <span class="title">Auteur</span>
+                        <span class="title">user</span>
                     </a>
                 </li>
                 <?php endif; ?>

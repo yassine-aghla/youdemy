@@ -6,11 +6,11 @@ use App\Controller\CategoriesController;
 use App\Config\Database;
 use App\Model\VideoCourse;
 use App\Model\DocumentCourse;
-use App\Model\User;
+use App\Model\Teacher;
 // session_start();
 
-if (!isset($_SESSION['user'])) {
-    header('Location:index.php');
+if (!isset($_SESSION['user'])||$_SESSION['user']['role'] !=='Enseignant') {
+    header('Location:../../public/index.php');
     exit();
 }
 if (!isset($_SESSION['user'])) {
@@ -27,7 +27,7 @@ $tags=$tag->displayTags();
 $categorie=new CategoriesController();
 $categories=$categorie->displayCategories();
 $teacherId = $_SESSION['user']['id']; 
-$stats =  User ::getTeacherStats($teacherId);
+$stats =  Teacher::getTeacherStats($teacherId);
 
 ?>
 <!DOCTYPE html>
@@ -200,7 +200,7 @@ a[href^="delete_article.php"]:hover {
 
 .stats-container h3 {
     font-size: 20px;
-    color: #555;
+    color:#2a2185;
     margin-top: 20px;
     margin-bottom: 10px;
 }
