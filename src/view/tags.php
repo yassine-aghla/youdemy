@@ -167,6 +167,14 @@ $role = $_SESSION['user']['role'];
                     </a>
                 </li>
                 <li>
+                    <a href="manage_teacher.php">
+                        <span class="icon">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">manage teacher</span>
+                    </a>
+                </li>
+                <li>
                     <a href="manage_course.php">
                         <span class="icon">
                            <ion-icon name="document-text-outline"></ion-icon>

@@ -70,6 +70,30 @@ td:last-child {
     justify-content: space-between; 
     gap: 10px; 
 }
+
+.valider  {
+    text-decoration: none; 
+    color: #fff; 
+    font-weight: bold; 
+    border: 2px solid #28a745; 
+    background-color: #28a745; 
+    padding: 8px 16px;
+    border-radius: 5px; 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+
+.valider:hover {
+    background-color: #218838; 
+    transform: scale(1.05); 
+}
+
+
+.valider:active {
+    background-color: #1e7e34; 
+    transform: scale(0.95); 
+}
+
         </style>
 </head>
 
@@ -190,7 +214,7 @@ td:last-child {
         <td><?= htmlspecialchars($teacher['id']) ?></td>
         <td><?= htmlspecialchars($teacher['username']) ?></td>
         <td><?= htmlspecialchars($teacher['email']) ?></td>
-        <td><a href="../Controller/activate_teacher.php?id=<?= htmlspecialchars($teacher['id']) ?>">Activate</a></td>
+        <td><a  href="../Controller/activate_teacher.php?id=<?= htmlspecialchars($teacher['id']) ?>" class="valider" >Valider d'étre Enseignant</a></td>
     </tr>
 <?php endforeach; ?>
 <?php else: ?>

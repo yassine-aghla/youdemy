@@ -17,6 +17,25 @@ $stmt = $pdo->query($totalCoursesVideoQuery);
 $totalCoursesVideo = $stmt->fetchColumn();
 $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
 
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$documentCourses = array_filter(
+  DocumentCourse::displayCourses($pdo, null, $page, $limit), 
+  function ($course) use ($search) {
+      $isNotDraft = $course['status'] !== 'draft';
+      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
+      return $isNotDraft && $matchesSearch;
+  }
+);
+$videoCourses = array_filter(
+  VideoCourse::displayCourses($pdo, null, $page, $limit), 
+  function ($course) use ($search) {
+      $isNotDraft = $course['status'] !== 'draft';
+      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
+      return $isNotDraft && $matchesSearch;
+  }
+);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +48,7 @@ $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
   <style>
      .pagination {
     display: flex;
-    justify-content: center; /* Centrer les liens */
+    justify-content: center; 
     align-items: center;
     margin-top: 20px;
     
@@ -75,6 +94,70 @@ $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
     margin-right: 0; 
 }
 
+form.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width:35%;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+form.search input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+form.search input[type="text"]:focus {
+    border-color:#357abd;
+    outline: none;
+}
+
+
+form.search button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color:#357abd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form.search button:hover {
+    background-color:#357abd;
+    transform: translateY(-2px);
+}
+
+form.search button:active {
+    transform: translateY(0);
+}
+
+
+@media (max-width: 768px) {
+    form.search {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    form.search input[type="text"], 
+    form.search button {
+        width: 100%;
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -92,7 +175,10 @@ $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
       </ul>
     </nav>
   </header>
-
+  <form method="GET" action="index.php" class="search">
+    <input type="text" name="search" placeholder="Rechercher un cour par titre" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+    <button type="submit">Rechercher</button>
+</form>
   <main>
     <h2>Welcome to Youdemy!</h2>
     <p>Explore our platform and unlock your learning potential.</p>
@@ -114,7 +200,7 @@ $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
     <div class="pagination">
     <?php
     for ($i = 1; $i <= $totalPagesVideo; $i++) {
-        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+        echo '<a href="?page=' . $i . '&search=' . urlencode($search) . '">' . $i . '</a>';
     }
     ?>
 </div>
@@ -136,7 +222,7 @@ $totalPagesVideo = ceil($totalCoursesVideo  / $limit);
         <div class="pagination">
     <?php
     for ($i = 1; $i <= $totalPages; $i++) {
-        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+        echo '<a href="?page=' . $i . '&search=' . urlencode($search) .  '">' . $i . '</a>';
     }
     ?>
 </div>

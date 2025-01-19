@@ -6,8 +6,8 @@ use App\Model\DocumentCourse;
 // session_start();
 $role = $_SESSION['user']['role'];
 $courses = array_merge(
-    VideoCourse::displayCourses($pdo),
-    DocumentCourse::displayCourses($pdo)
+    VideoCourse::displayCourses($pdo,null,null, null, true),
+    DocumentCourse::displayCourses($pdo,null,null, null, true)
 );
 ?>
 <!DOCTYPE html>
@@ -69,6 +69,59 @@ td:last-child {
     justify-content: space-between; 
     gap: 10px; 
 }
+form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+td[colspan="5"] {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+
+@media (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+    }
+
+    thead th {
+        padding: 8px;
+    }
+
+    tbody td {
+        padding: 8px;
+    }
+
+    select, button {
+        font-size: 0.8rem;
+    }
+}
         </style>
 </head>
 
@@ -122,6 +175,14 @@ td:last-child {
                             <ion-icon name="document-text-outline"></ion-icon>
                         </span>
                         <span class="title">manage courses</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage_teacher.php">
+                        <span class="icon">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">manage teacher</span>
                     </a>
                 </li>
                 <li>
@@ -191,7 +252,7 @@ td:last-child {
                     <td><?= htmlspecialchars($course['title']) ?></td>
                     <td><?= htmlspecialchars($course['contenu']) ?></td>
                     <td>
-                        <form method="POST" action="update_course_status.php">
+                        <form method="POST" action="../Controller/update_status.php">
                             <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
                             <select name="status">
                                 <option value="draft" <?= $course['status'] === 'draft' ? 'selected' : '' ?>>Brouillon</option>

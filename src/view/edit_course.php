@@ -160,6 +160,14 @@ if (!$course) {
                     </a>
                 </li>
                 <li>
+                    <a href="manage_teacher.php">
+                        <span class="icon">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">manage teacher</span>
+                    </a>
+                </li>
+                <li>
                     <a href="tags.php">
                         <span class="icon">
                         <ion-icon name="pricetag-outline"></ion-icon>
