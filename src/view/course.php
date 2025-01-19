@@ -6,6 +6,7 @@ use App\Controller\CategoriesController;
 use App\Config\Database;
 use App\Model\VideoCourse;
 use App\Model\DocumentCourse;
+use App\Model\User;
 // session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -26,6 +27,7 @@ $tags=$tag->displayTags();
 $categorie=new CategoriesController();
 $categories=$categorie->displayCategories();
 $teacherId = $_SESSION['user']['id']; 
+$stats =  User ::getTeacherStats($teacherId);
 
 ?>
 <!DOCTYPE html>
@@ -179,6 +181,52 @@ a[href^="delete_article.php"]:hover {
     background-color: #e74c3c;
     color: #fff;
 }
+.stats-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 20px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.stats-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.stats-container h3 {
+    font-size: 20px;
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.stats-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.stats-container ul li {
+    font-size: 16px;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.stats-container ul li strong {
+    color: #333;
+}
+
+.stats-container ul li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 
 
 
@@ -274,7 +322,13 @@ a[href^="delete_article.php"]:hover {
                     <img src="../../assets/me.jpg" alt="">
                 </div>
             </div>
+
+
+             
+            
   <!-- =============== formualire ================ -->
+
+
 
   <button id="add-article-btn">Add cours</button>
   <div id="form-container">
@@ -341,6 +395,7 @@ a[href^="delete_article.php"]:hover {
     <button type="submit" name="action" value="create">Ajouter Course</button>
 </form>
             </div>
+            <div>
   <h1>Liste des courses</h1>
   <h2>Cours Vidéo</h2>
     <table border="1">
@@ -439,9 +494,22 @@ a[href^="delete_article.php"]:hover {
 
         
         
-          <!-- ajouter les cours doucument dynamiquement -->
+          
         </tbody>
     </table>
+    </div>
+    <div class="stats-container">
+    <h2>Statistiques des cours</h2>
+    
+    <p><strong>Nombre total de cours : </strong><?= $stats['total_courses'] ?></p>
+    
+    <h3>Nombre d'étudiants inscrits par cours :</h3>
+    <ul>
+        <?php foreach ($stats['students_per_course'] as $course): ?>
+            <li><strong><?= htmlspecialchars($course['title']) ?>:</strong> <?= $course['total_students'] ?> étudiants</li>
+        <?php endforeach; ?>
+    </ul>
+</div>
     <script>
        
         const addArticleBtn = document.getElementById('add-article-btn');

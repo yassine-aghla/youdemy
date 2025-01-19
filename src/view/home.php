@@ -169,11 +169,14 @@ form.search button:active {
     <nav class="navbar">
       <ul>
         <li><a href="home.php">Home</a></li>
-        <li><a href="#courses">Courses</a></li>
+        <li><a href="my_courses.php">Mes Courses</a></li>
         <li><a href="../../pages/logout.php">logout</a></li>
        
       </ul>
     </nav>
+    <div class="welcome-message">
+    <p>Bonjour, <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
+</div>
   </header>
   <form method="GET" action="home.php" class="search">
     <input type="text" name="search" placeholder="Rechercher un cour par titre" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
@@ -194,6 +197,10 @@ form.search button:active {
                 <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
                 <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
                 <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
+                <form method="POST" action="../Controller/enroll.php">
+                 <input type="hidden" name="course_id" value="<?= $course['id'] ?>">
+                 <button type="submit">S'inscrire</button>
+                  </form>
             </div>
         <?php endforeach; ?>
     </div>
@@ -216,6 +223,10 @@ form.search button:active {
                 <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
                 <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
                 <a href="<?= htmlspecialchars($course['document_path']) ?>" target="_blank">View Document</a>
+                <form method="POST" action="../Controller/enroll.php">
+                 <input type="hidden" name="course_id" value="<?= $course['id'] ?>">
+                  <button type="submit">S'inscrire</button>
+                  </form>
             </div>
         <?php endforeach; ?>
         </div>

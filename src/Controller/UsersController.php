@@ -28,5 +28,6 @@ class UsersController {
     public static function getUsers() {
         return User::getAllUsers();
     }
+ 
 
 }

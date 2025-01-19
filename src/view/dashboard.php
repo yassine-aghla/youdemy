@@ -9,7 +9,8 @@
 //     exit();
 // }
 require_once '../../vendor/autoload.php';
-use App\Model\Course;  
+use App\Model\Course; 
+
 use App\Config\Database;
 $pdo = Database::getConnection();
 session_start();
@@ -17,6 +18,7 @@ $role =$_SESSION['user']['role'];
 require_once __DIR__.'/../controller/tags.php';
 require_once __DIR__.'/../controller/categoriesController.php';
 $totalCourses = Course::countCourses($pdo);
+
 ?>
 
 <!DOCTYPE html>

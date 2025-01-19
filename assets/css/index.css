@@ -19,6 +19,7 @@
     padding: 15px 30px;
     background-color: #4a90e2;
     color: white;
+    margin-bottom: 10px;
   }
   
   header .logo h1 {
@@ -208,6 +209,16 @@ footer {
     transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   }
+  .welcome-message {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+    text-align: center;
+}
   
  
 
