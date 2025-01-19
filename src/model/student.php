@@ -6,14 +6,15 @@ use App\Config\Database;
 class Student extends User {
     public function signup() {
         $conn = Database::getConnection();
-        $query = "INSERT INTO users (username, email, password, role) 
-                  VALUES (:username, :email, :password, :role)";
+        $query = "INSERT INTO users (username, email, password, role,is_active) 
+                  VALUES (:username, :email, :password, :role, :is_active)";
         $stmt = $conn->prepare($query);
         return $stmt->execute([
             ':username' => $this->username,
             ':email' => $this->email,
             ':password' => password_hash($this->password, PASSWORD_BCRYPT),
-            ':role' => 'Etudiant'
+            ':role' => 'Etudiant',
+            ':is_active'=>true
         ]);
     }
 }

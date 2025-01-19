@@ -68,3 +68,6 @@ CREATE TABLE enrollments (
     FOREIGN KEY (course_id) REFERENCES courses(id)
 );
 
+select c.title,c. description,u.username,u.email
+from courses c 
+left JOIN users u ON c.teacher_id=u.id

@@ -278,10 +278,10 @@ if (!$course) {
 <?php endforeach; ?>
 </div>
    
-    <div>
+    <!-- <div>
         <label for="featured_image">Featured Image URL</label>
         <input type="url" id="featured_image" name="featured_image" placeholder="Enter image URL" required>
-    </div>
+    </div> -->
 
     <button type="submit" name="update-course" value="update">Update Course</button>
 </form>

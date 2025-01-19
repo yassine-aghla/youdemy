@@ -41,10 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
     $category_id =$_POST['category_id']; 
      $tags = $_POST['tags'];
     $content = $_POST['content'];
-    // $contenu = $_POST['contenu'];
-$query = "UPDATE courses SET title = ?, description = ?, contenu = ?, category_id = ? WHERE id = ?";
+     $contenu = $_POST['contenu'];
+     if ($contenu === 'video') {
+      $video_path = $_POST['contenu_video'];
+$query = "UPDATE courses SET title = ?, description = ?, contenu = ?, video_path = ?, document_path = NULL, category_id = ? WHERE id = ?";
  $stmt = $pdo->prepare($query);
- $stmt->execute([$title, $description, $content, $category_id, $id]);
+ $stmt->execute([$title, $description, $content, $video_path ,$category_id,$id]);
+     }
+     elseif ($contenu === 'document') {
+        $document_path = $_POST['contenu_document'];
+  $query = "UPDATE courses SET title = ?, description = ?, contenu = ?, video_path = NULL ,document_path = ?, category_id = ? WHERE id = ?";
+   $stmt = $pdo->prepare($query);
+   $stmt->execute([$title, $description, $content, $document_path,$category_id, $id]);
+       }
  $deleteTagsQuery = "DELETE FROM course_tags WHERE course_id = ?";
     $stmt = $pdo->prepare($deleteTagsQuery);
     $stmt->execute([$id]);

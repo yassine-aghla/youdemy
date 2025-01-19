@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location:../src/view/course.php");
         } else{
 
-            header("Location:../public/index.php");
+            header("Location:../src/view/home.php");
         }
         // header("Location:../src/view/dashboard.php");
          exit;

@@ -74,6 +74,39 @@ use App\Controller\UsersController;
         .signup-form .login-link a:hover {
             text-decoration: underline;
         }
+       
+select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    max-width: 250px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+
+select:focus {
+    border-color:rgb(88, 89, 88);
+    background-color: #f1fdf1;
+    outline: none;
+}
+
+
+select option {
+    padding: 8px;
+}
+
+
+@media (max-width: 768px) {
+    select {
+        width: 100%;
+    }
+}
+
     </style>
 </head>
 <body>

@@ -76,10 +76,23 @@ form {
 }
 
 select {
-    padding: 5px;
+    padding: 10px;
+    font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    width: 60%;
+    max-width: 250px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+
+select:focus {
+    border-color:rgb(88, 89, 88);
+    background-color: #f1fdf1;
+    outline: none;
 }
 
 button {
