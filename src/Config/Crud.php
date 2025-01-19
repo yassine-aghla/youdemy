@@ -68,6 +68,29 @@ class Crud {
 
         return $stmt->execute();
     }
- 
+
+
+    public static function insertMultiple($table, $columns, $values) {
+        $conn = Database::getConnection();
+        
+     
+        $placeholders = implode(", ", array_fill(0, count($values), "(" . implode(", ", array_fill(0, count($columns), "?")) . ")"));
     
+        $columnsString = implode(", ", $columns);
+    
+        $query = "INSERT INTO $table ($columnsString) VALUES $placeholders";
+    
+        $stmt = $conn->prepare($query);
+    
+      
+        $flattenedValues = [];
+        foreach ($values as $row) {
+            foreach ($row as $value) {
+                $flattenedValues[] = $value;
+            }
+        }
+    
+        return $stmt->execute($flattenedValues);
+    }
+ 
 }

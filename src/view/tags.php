@@ -22,11 +22,7 @@ $role = $_SESSION['user']['role'];
     gap: 15px;
 
   }
-  .form-container{
-    width:500px;
-    margin:auto;
- margin-bottom:30px;
-  }
+
   form label {
     font-weight: bold;
     margin-bottom: 5px;
@@ -47,6 +43,7 @@ $role = $_SESSION['user']['role'];
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    width: 35%;
   }
   
   form button:hover {
@@ -118,6 +115,83 @@ $role = $_SESSION['user']['role'];
 .update:hover {
   background-color: green;
   color: white; 
+}
+.tags-preview h3 {
+    margin-bottom: 10px;
+}
+.tags-preview span {
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+}
+.tags-preview span:hover {
+    background-color: #ddd;
+    text-decoration: line-through;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.form-container label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+
+.form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-container input[type="text"]:focus {
+    border-color:#2a2185; 
+}
+
+
+.form-container button {
+    background-color:#2a2185; 
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-container button:hover {
+    background-color:#2a2185; 
+    transform: scale(1.05); 
+}
+
+.form-container button:active {
+    transform: scale(0.98); 
 }
  
 
@@ -232,13 +306,25 @@ $role = $_SESSION['user']['role'];
       <!-- affichage  -->
             <div class="container">
     
-            <div class="form-container">
-      <form id="tagForm" method="POST">
-        <label for="tagName">Nom du Tag :</label>
-        <input type="text" id="tagName" name="tagName" placeholder="Entrez un nom de tag" required>
-        <button type="submit" name="submit">Ajouter</button>
-      </form>
+            <div class="container">
+    <div class="form-container">
+        <label for="tagInput">Nom du Tag :</label>
+        <input type="text" id="tagInput" placeholder="Entrez un tag" />
+        <button type="button" id="addTagButton">Ajouter au cadre</button>
     </div>
+
+    <div class="tags-preview">
+        <h3>Tags ajoutés :</h3>
+        <div id="tagsFrame" style="border: 1px solid #ddd; padding: 10px; min-height: 50px;">
+           
+        </div>
+    </div>
+
+    <form id="submitTagsForm" method="POST">
+        <input type="hidden" name="tags" id="tagsInput" />
+        <button type="submit" name="submit">Insérer tous les tags</button>
+    </form>
+</div>
     <div class="table-container">
     <table>
         <thead>
@@ -273,7 +359,42 @@ $role = $_SESSION['user']['role'];
     </div>
   </div>
   <script src="dashboard.js"></script>
-   
+   <script>
+    const tagInput = document.getElementById("tagInput");
+    const addTagButton = document.getElementById("addTagButton");
+    const tagsFrame = document.getElementById("tagsFrame");
+    const tagsInput = document.getElementById("tagsInput");
+    let tags = [];
+
+    
+    addTagButton.addEventListener("click", () => {
+        const tagName = tagInput.value.trim();
+        if (tagName && !tags.includes(tagName)) {
+            tags.push(tagName);
+
+    
+            const tagElement = document.createElement("span");
+            tagElement.textContent = tagName;
+            tagElement.style.marginRight = "10px";
+            tagElement.style.padding = "5px";
+            tagElement.style.border = "1px solid #333";
+            tagElement.style.display = "inline-block";
+            tagElement.style.cursor = "pointer";
+            tagElement.title = "Cliquez pour supprimer";
+
+           
+            tagElement.addEventListener("click", () => {
+                tags = tags.filter(tag => tag !== tagName);
+                tagsFrame.removeChild(tagElement);
+            });
+
+            tagsFrame.appendChild(tagElement);
+        }
+        tagInput.value = ""; 
+        tagsInput.value = tags.join(","); 
+    });
+
+    </script>
 
    <!-- ======= Charts JS ====== -->
    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>

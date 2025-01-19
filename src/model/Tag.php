@@ -29,5 +29,12 @@ class Tag {
         $result = crud::select(self::$table, "COUNT(*) as total");
         return $result[0]['total'] ?? 0;
     }
+    public static function createMultipleTags($tags) {
+        $data = [];
+        foreach ($tags as $tag) {
+            $data[] = [$tag];
+        }
+        return Crud::insertMultiple('tags', ['name'], $data);
+    }
 }
 ?>
