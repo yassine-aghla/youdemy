@@ -4,7 +4,7 @@ require __DIR__.'/../controller/tags.php';
 use App\Model\Tag;
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
-    header('Location: index.php');
+    header('Location: ../../public/index.php');
     exit();
 }
 if (!isset($_SESSION['user'])) {
@@ -127,7 +127,7 @@ if (isset($_GET['id'])) {
                 <li>
                     <a href="manage_teacher.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                           <ion-icon name="school"></ion-icon>
                         </span>
                         <span class="title">manage teacher</span>
                     </a>

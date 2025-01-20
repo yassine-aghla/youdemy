@@ -1,13 +1,4 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
-//     header('Location:../../public/index.php');
-//     exit();
-// }
-// if (!isset($_SESSION['user'])) {
-//     header("Location: login.php");
-//     exit();
-// }
 require_once '../../vendor/autoload.php';
 use App\Model\Course; 
 use App\Model\Admin;  
@@ -16,7 +7,7 @@ use App\Config\Database;
 $pdo = Database::getConnection();
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
-    header('Location: index.php');
+    header('Location:../../public/index.php');
     exit();
 }
 if (!isset($_SESSION['user'])) {
@@ -136,7 +127,7 @@ $userCount=User::getUsersCount();
                 <li>
                     <a href="manage_teacher.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                         <ion-icon name="school"></ion-icon>
                         </span>
                         <span class="title">manage teacher</span>
                     </a>

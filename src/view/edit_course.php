@@ -170,7 +170,7 @@ if (!$course) {
                 <li>
                     <a href="manage_teacher.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                        <ion-icon name="school"></ion-icon>
                         </span>
                         <span class="title">manage teacher</span>
                     </a>

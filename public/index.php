@@ -182,7 +182,7 @@ form.search button:active {
                 <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
                 <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
                 <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
-                <p><strong>Document:</strong> <?= htmlspecialchars($course['document_path']) ?></p>
+                <p><strong>Document:</strong> <?= htmlspecialchars(substr($course['document_path'], 0, 3)) ?>...</p>
                
             </div>
         <?php endforeach; ?>

@@ -384,10 +384,10 @@ a[href^="delete_article.php"]:hover {
                     </div>
                 <?php endforeach; ?>
                 </div>
-    <div>
+    <!-- <div>
         <label for="featured_image">Featured Image URL</label>
         <input type="url" id="featured_image" name="featured_image" placeholder="Enter image URL" required>
-    </div>
+    </div> -->
     <div>
         <label for="scheduled_date">Scheduled Date</label>
         <input type="date" id="scheduled_date" name="scheduled_date" required>
@@ -433,7 +433,7 @@ a[href^="delete_article.php"]:hover {
                 <form method='GET' action='../controller/CourseController.php' style='display:inline;'>
                     <input type='hidden' name='action' value='delete'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
-                    <button type='submit' name="delete">Supprimer</button>
+                    <button type='submit' name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cour ?')">Supprimer</button>
                 </form>
                 <form method='GET' action='edit_course.php' style='display:inline;'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
@@ -455,7 +455,7 @@ a[href^="delete_article.php"]:hover {
                 <th>Categorie</th>
                 <th>Teacher</th>
                 <th>Tags</th>
-                <th>Document Path</th>
+                <th>Document </th>
                 <th>created at</th>
                 <th>Action</th>
             </tr>
@@ -480,7 +480,7 @@ a[href^="delete_article.php"]:hover {
                 <form method='GET' action='../controller/CourseController.php' style='display:inline;'>
                     <input type='hidden' name='action' value='delete'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
-                    <button type='submit' name="supprimer-course">Supprimer</button>
+                    <button type='submit' name="supprimer-course" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cour ?')">Supprimer</button>
                 </form>
                 <form method='GET' action='edit_course.php' style='display:inline;'>
                     <input type='hidden' name='id' value='<?= $course['id'] ?>'>
