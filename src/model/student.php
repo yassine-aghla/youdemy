@@ -40,5 +40,15 @@ class Student extends User {
         $stmt->execute([':student_id' => $studentId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function unenrollFromCourse($studentId, $courseId) {
+        $conn = Database::getConnection();
+        $query = "DELETE FROM enrollments WHERE student_id = :student_id AND course_id = :course_id";
+        $stmt = $conn->prepare($query);
+        return $stmt->execute([
+            ':student_id' => $studentId,
+            ':course_id' => $courseId
+        ]);
+    }
+
 
 }

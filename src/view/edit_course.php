@@ -17,8 +17,8 @@ $tags = $tag->displayTags();
 $categorie = new CategoriesController();
 $categories = $categorie->displayCategories();
 // session_start();
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
-    header('Location: index.php');
+if (!isset($_SESSION['user'])||$_SESSION['user']['role'] !=='Enseignant') {
+    header('Location:../../public/index.php');
     exit();
 }
 if (!isset($_SESSION['user'])) {

@@ -1,42 +1,13 @@
 <?php
 require_once '../../vendor/autoload.php';
 require_once __DIR__ . '/../Controller/CourseController.php';
-// use App\Config\Database;
-use App\Model\VideoCourse;
-use App\Model\DocumentCourse;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 4;
-$videoCourses = VideoCourse::displayCourses($pdo,null,$page, $limit);
-$documentCourses = DocumentCourse::displayCourses($pdo,null,$page, $limit);
-$totalCoursesQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NULL AND document_path IS NOT NULL";
-$stmt = $pdo->query($totalCoursesQuery);
-$totalCourses = $stmt->fetchColumn();
-$totalPages = ceil($totalCourses / $limit);
-$totalCoursesVideoQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NOT NULL AND document_path IS NULL";
-$stmt = $pdo->query($totalCoursesVideoQuery);
-$totalCoursesVideo = $stmt->fetchColumn();
-$totalPagesVideo = ceil($totalCoursesVideo  / $limit);
-
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-
-$documentCourses = array_filter(
-  DocumentCourse::displayCourses($pdo, null, $page, $limit), 
-  function ($course) use ($search) {
-      $isNotDraft = $course['status'] !== 'draft';
-      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
-      return $isNotDraft && $matchesSearch;
-  }
-);
-$videoCourses = array_filter(
-  VideoCourse::displayCourses($pdo, null, $page, $limit), 
-  function ($course) use ($search) {
-      $isNotDraft = $course['status'] !== 'draft';
-      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
-      return $isNotDraft && $matchesSearch;
-  }
-);
-
+require_once 'home_logic.php'; 
+if (!isset($_SESSION['user'])) {
+  header("Location: login.php");
+  exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -190,6 +161,7 @@ form.search button:active {
     <h2>Video Courses</h2>
     <div class="courses-container">
         <?php foreach ($videoCourses as $course): ?>
+         
             <div class="course-card">
                 <iframe src="<?= htmlspecialchars($course['video_path']) ?>" width="300" height="200" frameborder="0" allowfullscreen></iframe>
                 <h3><?= htmlspecialchars($course['title']) ?></h3>
@@ -215,6 +187,7 @@ form.search button:active {
     <h2>Document Courses</h2>
     <div class="courses-container">
         <?php foreach ($documentCourses as $course): ?>
+         
             <div class="course-card">
                 <img src="https://via.placeholder.com/300x200" alt="Document Icon">
                 <h3><?= htmlspecialchars($course['title']) ?></h3>
@@ -222,7 +195,8 @@ form.search button:active {
                 <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
                 <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
                 <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
-                <a href="<?= htmlspecialchars($course['document_path']) ?>" target="_blank">View Document</a>
+                <!--  -->
+                <p><strong>Document:</strong> <?= htmlspecialchars(substr($course['document_path'], 0, 3)) ?>...</p>
                 <form method="POST" action="../Controller/enroll.php">
                  <input type="hidden" name="course_id" value="<?= $course['id'] ?>">
                   <button type="submit">S'inscrire</button>

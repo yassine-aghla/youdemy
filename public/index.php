@@ -1,40 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once __DIR__ . '/../src/Controller/CourseController.php';
-// use App\Config\Database;
-use App\Model\VideoCourse;
-use App\Model\DocumentCourse;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 4;
-$videoCourses = VideoCourse::displayCourses($pdo,null,$page, $limit);
-$documentCourses = DocumentCourse::displayCourses($pdo,null,$page, $limit);
-$totalCoursesQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NULL AND document_path IS NOT NULL";
-$stmt = $pdo->query($totalCoursesQuery);
-$totalCourses = $stmt->fetchColumn();
-$totalPages = ceil($totalCourses / $limit);
-$totalCoursesVideoQuery = "SELECT COUNT(*) FROM courses WHERE video_path IS NOT NULL AND document_path IS NULL";
-$stmt = $pdo->query($totalCoursesVideoQuery);
-$totalCoursesVideo = $stmt->fetchColumn();
-$totalPagesVideo = ceil($totalCoursesVideo  / $limit);
-
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-
-$documentCourses = array_filter(
-  DocumentCourse::displayCourses($pdo, null, $page, $limit), 
-  function ($course) use ($search) {
-      $isNotDraft = $course['status'] !== 'draft';
-      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
-      return $isNotDraft && $matchesSearch;
-  }
-);
-$videoCourses = array_filter(
-  VideoCourse::displayCourses($pdo, null, $page, $limit), 
-  function ($course) use ($search) {
-      $isNotDraft = $course['status'] !== 'draft';
-      $matchesSearch = empty($search) || stripos($course['title'], $search) !== false;
-      return $isNotDraft && $matchesSearch;
-  }
-);
+ require_once __DIR__ . '/../src/Controller/CourseController.php';
+require_once '../src/view/home_logic.php'; 
 
 ?>
 
@@ -169,7 +136,7 @@ form.search button:active {
     <nav class="navbar">
       <ul>
         <li><a href="index.php">Home</a></li>
-        <li><a href="#courses">Courses</a></li>
+        <!-- <li><a href="#courses">Courses</a></li> -->
         <li><a href="../pages/sign_up.php">Signup</a></li>
         <li><a href="../pages/login.php">Login</a></li>
       </ul>
@@ -215,7 +182,8 @@ form.search button:active {
                 <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
                 <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
                 <p><strong>Tags:</strong> <?= htmlspecialchars($course['tags']) ?></p>
-                <a href="<?= htmlspecialchars($course['document_path']) ?>" target="_blank">View Document</a>
+                <p><strong>Document:</strong> <?= htmlspecialchars($course['document_path']) ?></p>
+               
             </div>
         <?php endforeach; ?>
         </div>

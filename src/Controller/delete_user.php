@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         if ($stmt->execute()) {
             header("Location:../view/users.php");
-            echo "Utilisateur supprimé avec succès.";
+            
         } else {
             echo "Erreur lors de la suppression de l'utilisateur.";
         }

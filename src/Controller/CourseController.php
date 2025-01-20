@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $teacher_id=$_SESSION['user']['id'];
 
     
-    // var_dump($contenu);
     if ($contenu === 'video') {
       
         $video_path = $_POST['contenu_video'];
@@ -44,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
      $contenu = $_POST['contenu'];
      if ($contenu === 'video') {
       $video_path = $_POST['contenu_video'];
-$query = "UPDATE courses SET title = ?, description = ?, contenu = ?, video_path = ?, document_path = NULL, category_id = ? WHERE id = ?";
- $stmt = $pdo->prepare($query);
- $stmt->execute([$title, $description, $content, $video_path ,$category_id,$id]);
+      $query = "UPDATE courses SET title = ?, description = ?, contenu = ?, video_path = ?, document_path = NULL, category_id = ? WHERE id = ?";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$title, $description, $content, $video_path ,$category_id,$id]);
      }
      elseif ($contenu === 'document') {
         $document_path = $_POST['contenu_document'];

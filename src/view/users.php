@@ -5,6 +5,14 @@ use App\Controller\UsersController;
  $users = UsersController::getUsers();
 
 //  session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !=='Admin') {
+    header('Location: index.php');
+    exit();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
 $role = $_SESSION['user']['role'];
 ?>
 

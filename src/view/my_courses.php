@@ -19,7 +19,7 @@ $enrolledCourses = Student::getEnrolledCourses($studentId);
   <title>Youdemy Platform</title>
   <link rel="stylesheet" href="../../assets/css/index.css">
   <style>
-    /* Styles généraux */
+
 
 
 
@@ -83,6 +83,13 @@ h2 {
 .course-card a:hover {
     background-color: #0056b3;
 }
+.details a{
+  background-color:rgb(11, 30, 50);
+}
+.details_form{
+  display:flex;
+  gap:10px;
+}
 
 </style>
 </head>
@@ -107,19 +114,31 @@ h2 {
 <h2>Mes Cours</h2>
 <div class="courses-container">
     <?php foreach ($enrolledCourses as $course): ?>
+    
         <div class="course-card">
+         
             <h3><?= htmlspecialchars($course['title']) ?></h3>
             <p><strong>Description:</strong> <?= htmlspecialchars($course['description']) ?></p>
             <p><strong>Contenu:</strong> <?= htmlspecialchars($course['contenu']) ?></p>
-            <p><strong>Teacher:</strong> <?= htmlspecialchars($course['teacher_name']) ?></p>
-            <p><strong>Email Teacher:</strong><?= htmlspecialchars($course['teacher_email']) ?></p>
             <p><strong>Category:</strong> <?= htmlspecialchars($course['category_name']) ?></p>
             <?php if ($course['video_path']): ?>
                 <iframe src="<?= htmlspecialchars($course['video_path']) ?>" width="300" height="200" frameborder="0" allowfullscreen></iframe>
             <?php endif; ?>
             <?php if ($course['document_path']): ?>
-            <p><strong>Document:</strong> <?= htmlspecialchars($course['document_path']) ?></p>
+            <p><strong>Document:</strong> <?= htmlspecialchars(substr($course['document_path'], 0, 3)) ?>...</p>
             <?php endif; ?>
+            <div class="details_form">
+            <div class="forms">
+            <form method="POST" action="../Controller/enroll.php">
+          <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
+         <input type="hidden" name="action" value="unenroll">
+          <button type="submit" class="unenroll-button">Se désinscrire</button>
+          </form>
+          </div>
+          <div class="details">
+          <a href="course_details.php?id=<?= htmlspecialchars($course['id']) ?>" class="course-link">view details</a>
+          </div>
+          </div>
         </div>
     <?php endforeach; ?>
 </div>

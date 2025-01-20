@@ -11,6 +11,7 @@
 require_once '../../vendor/autoload.php';
 use App\Model\Course; 
 use App\Model\Admin;  
+use  App\Model\User;
 use App\Config\Database;
 $pdo = Database::getConnection();
 session_start();
@@ -28,6 +29,7 @@ require_once __DIR__.'/../controller/categoriesController.php';
 $totalCourses = Course::countCourses($pdo);
 $stats = Admin::getAdminStats();
 $categoriesStats = Admin::getCoursesByCategory();
+$userCount=User::getUsersCount();
 ?>
 
 <!DOCTYPE html>
@@ -201,7 +203,7 @@ $categoriesStats = Admin::getCoursesByCategory();
 
                 <div class="card">
                     <div>
-                        <div class="numbers">0</div>
+                        <div class="numbers"><?php echo $userCount ?></div>
                         <div class="cardName">Users</div>
                     </div>
 

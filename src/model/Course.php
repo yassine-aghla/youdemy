@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Model;
+use App\Config\Database;
+
 
 abstract class Course
 {
@@ -37,4 +39,42 @@ abstract class Course
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['total'];
     }
+
+    public static function getCourseDetails($course_id)
+    {
+        $conn = Database::getConnection();
+        $query = "SELECT 
+                    c.id,
+                    c.title, 
+                    c.contenu, 
+                    c.description,
+                    c.status,
+                    c.video_path,
+                    c.document_path,
+                    ca.name AS category_name, 
+                    users.username AS teacher_name,
+                    users.email AS teacher_email,
+                    GROUP_CONCAT(tags.name ORDER BY tags.name ASC) AS tags,  
+                    c.created_at 
+                FROM 
+                    courses c
+                INNER JOIN 
+                    users ON c.teacher_id = users.id
+                LEFT JOIN 
+                    categories ca ON ca.id = c.category_id
+                LEFT JOIN 
+                    course_tags ON course_tags.course_id = c.id
+                LEFT JOIN 
+                    tags ON tags.id = course_tags.tag_id
+                WHERE 
+                    c.id = :course_id
+                GROUP BY 
+                    c.id, c.title, c.contenu, c.status, ca.name, users.username, c.created_at;";
+        
+        $stmt =  $conn->prepare($query);
+        $stmt->bindParam(':course_id', $course_id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    
 }
